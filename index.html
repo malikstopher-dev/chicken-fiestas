@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <title>Fiestas Chicken – Authentic Charcoal Grilled Perfection | Johannesburg</title>
+  <meta name="description" content="Fiestas Chicken brings you authentic charcoal grilled chicken in Johannesburg. Premium peri-peri, burgers, grills & family combos. Order online for delivery." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --red: #C8102E;
+      --red-dark: #9e0c23;
+      --gold: #D4AF37;
+      --gold-light: #f0d060;
+      --orange: #ff6a00;
+      --charcoal: #1a1a1a;
+      --dark-bg: #0f0f0f;
+      --card-bg: #1e1e1e;
+    }
+    * { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+    h1, h2, h3, h4, .font-serif { font-family: 'Playfair Display', serif; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--charcoal); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+    /* Nav */
+    nav.scrolled { background: rgba(15,15,15,0.95); backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: fill;
+      z-index: 0;
+    }
+    .hero-overlay {
+      background: radial-gradient(ellipse at center bottom, rgba(200,16,46,0.1) 0%, transparent 60%),
+                  radial-gradient(ellipse at center top, rgba(212,175,55,0.03) 0%, transparent 40%),
+                  linear-gradient(180deg, rgba(15,15,15,0.05) 0%, rgba(15,15,15,0.2) 100%);
+      z-index: 1;
+    }
+    .hero .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== FLAME ANIMATIONS ===== */
+    .flame-wrapper {
+      position: relative; width: 200px; height: 120px; margin: 0 auto;
+    }
+    .flame {
+      position: absolute; bottom: 0; left: 50%; width: 28px; height: 85px;
+      background: linear-gradient(to top, rgba(255,34,0,0.9), rgba(255,136,0,0.8), rgba(255,221,68,0.6));
+      border-radius: 50% 50% 30% 30%;
+      filter: blur(3px); transform-origin: bottom center;
+      box-shadow: 0 0 35px rgba(255,170,0,0.6);
+      animation: flicker 0.7s infinite alternate ease-in-out;
+    }
+    @keyframes flicker {
+      0%   { transform: scaleY(1) scaleX(1) skew(0deg); opacity: 0.85; }
+      25%  { transform: scaleY(1.08) scaleX(0.96) skew(3deg); opacity: 1; }
+      50%  { transform: scaleY(0.95) scaleX(1.05) skew(-2deg); opacity: 0.9; }
+      75%  { transform: scaleY(1.05) scaleX(0.98) skew(4deg); opacity: 0.95; }
+      100% { transform: scaleY(0.92) scaleX(1.02) skew(-3deg); opacity: 0.8; }
+    }
+    .ember {
+      position: absolute; bottom: 25px; width: 5px; height: 5px;
+      background: #ffeeaa; border-radius: 50%;
+      box-shadow: 0 0 10px #ffff88;
+      animation: ember-rise 1.8s linear infinite;
+    }
+    @keyframes ember-rise {
+      0%   { transform: translateY(0) scale(1); opacity: 1; }
+      80%  { opacity: 0.5; }
+      100% { transform: translateY(-140px) scale(0.3); opacity: 0; }
+    }
+
+    /* Glow ring */
+    .logo-glow {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(212,175,55,0.3)) drop-shadow(0 0 60px rgba(200,16,46,0.2)); }
+      50% { filter: drop-shadow(0 0 40px rgba(212,175,55,0.5)) drop-shadow(0 0 100px rgba(200,16,46,0.35)); }
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(200,16,46,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 35px rgba(200,16,46,0.5);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), #b8962f);
+      color: #0f0f0f;
+      box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 35px rgba(212,175,55,0.45);
+    }
+    .btn-outline {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover { background: var(--gold); color: #0f0f0f; }
+
+    /* Cards */
+    .menu-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.15);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+    }
+    .menu-card:hover {
+      border-color: rgba(212,175,55,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .menu-card:hover .menu-img { transform: scale(1.08); }
+
+    .menu-img-wrapper { overflow: hidden; }
+    .menu-img {
+      transition: transform 0.6s ease;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    /* Category filter buttons */
+    .filter-btn.active {
+      background: var(--gold); color: #0f0f0f; border-color: var(--gold);
+    }
+
+    /* Combo card */
+    .combo-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.15);
+      transition: all 0.4s ease;
+    }
+    .combo-card:hover {
+      border-color: var(--gold);
+      transform: scale(1.02);
+      box-shadow: 0 20px 60px rgba(200,16,46,0.15);
+    }
+
+    /* Section dividers */
+    .section-title { position: relative; display: inline-block; }
+    .section-title::after {
+      content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      border-radius: 2px;
+    }
+
+    /* Testimonial */
+    .testimonial-card {
+      background: #f9f9f9;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212,175,55,0.15);
+      transition: all 0.3s ease;
+    }
+    .testimonial-card:hover { border-color: rgba(212,175,55,0.25); }
+
+    /* Footer links */
+    .footer-link { transition: color 0.3s ease; }
+    .footer-link:hover { color: var(--gold); }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Form */
+    .form-input {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      color: #1a1a1a;
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: var(--gold);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    }
+
+    /* Delivery buttons */
+    .delivery-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 12px; font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .flame-wrapper { width: 140px; height: 90px; }
+      .flame { width: 18px; height: 55px; }
+      @keyframes ember-rise {
+        0%   { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-100px) scale(0.3); opacity: 0; }
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 px-4 sm:px-6 lg:px-12 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <img src="logo.jpg" alt="Fiestas Chicken Logo" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover" />
+        <span class="text-white font-bold text-lg sm:text-xl font-serif tracking-wide">Fiestas Chicken</span>
+      </a>
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="#menu" class="text-gray-300 hover:text-gold transition-colors text-sm font-medium" style="--gold: var(--gold);">Menu</a>
+        <a href="#combos" class="text-gray-300 hover:text-gold transition-colors text-sm font-medium" style="--gold: var(--gold);">Combos</a>
+        <a href="#about" class="text-gray-300 hover:text-gold transition-colors text-sm font-medium" style="--gold: var(--gold);">About</a>
+        <a href="#testimonials" class="text-gray-300 hover:text-gold transition-colors text-sm font-medium" style="--gold: var(--gold);">Reviews</a>
+        <a href="#contact" class="text-gray-300 hover:text-gold transition-colors text-sm font-medium" style="--gold: var(--gold);">Contact</a>
+        <a href="#menu" class="btn-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold">Order Now</a>
+      </div>
+      <!-- Mobile Hamburger -->
+      <button id="menuToggle" class="lg:hidden text-white text-2xl p-2" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="lg:hidden hidden mt-4 bg-charcoal/95 backdrop-blur-xl rounded-2xl p-6 border border-gold/10" style="background: rgba(15,15,15,0.97);">
+      <div class="flex flex-col gap-4 text-center">
+        <a href="#menu" class="text-gray-300 hover:text-gold transition-colors py-2">Menu</a>
+        <a href="#combos" class="text-gray-300 hover:text-gold transition-colors py-2">Combos</a>
+        <a href="#about" class="text-gray-300 hover:text-gold transition-colors py-2">About</a>
+        <a href="#testimonials" class="text-gray-300 hover:text-gold transition-colors py-2">Reviews</a>
+        <a href="#contact" class="text-gray-300 hover:text-gold transition-colors py-2">Contact</a>
+        <a href="#menu" class="btn-primary text-white px-6 py-3 rounded-full text-sm font-semibold mt-2">Order Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section id="hero" class="hero flex flex-col">
+    <!-- Video Background -->
+    <video autoplay muted loop playsinline>
+      <source src="video/hero-16x9.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay absolute inset-0"></div>
+
+    <!-- Background particles (subtle smoke/embers) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" style="z-index: 1;">
+      <div id="bgEmbers" class="absolute inset-0"></div>
+    </div>
+
+    <div class="flex-1"></div>
+    <div class="hero-content text-center px-4 sm:px-6 max-w-5xl mx-auto">
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+        <a href="#menu" class="btn-primary text-white px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3">
+          <i class="fas fa-fire"></i> Explore Menu
+        </a>
+        <a href="#contact" class="btn-outline px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3">
+          <i class="fas fa-truck"></i> Order Online
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SIGNATURE GRILLS SECTION ========== -->
+  <section id="signature" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-12" style="background: #FFF8E1;">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="text-sm uppercase tracking-[0.2em] font-semibold" style="color: var(--red);">— Signature Selection —</span>
+        <h2 class="text-3xl sm:text-5xl font-bold font-serif mt-4 section-title" style="color: #1a1a1a;">Our Signature Grills</h2>
+        <p class="mt-6 max-w-xl mx-auto" style="color: #555;">Hand-selected cuts, marinated in our secret peri-peri recipe, grilled over authentic charcoal</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <!-- Item 1 -->
+        <div class="menu-card rounded-2xl overflow-hidden group reveal">
+          <div class="menu-img-wrapper h-56">
+            <img src="Close-up Flame-Grilled Chicken.jpg" alt="Flame-Grilled Quarter" class="menu-img" />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold font-serif mb-2" style="color: #1a1a1a;">Flame-Grilled Quarter</h3>
+            <p class="text-sm leading-relaxed mb-4" style="color: #555;">Succulent quarter chicken, peri-peri basted, charcoal grilled to smoky perfection</p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-bold font-serif" style="color: var(--gold);">R89</span>
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Flame-Grilled%20Quarter*%20-%20R89" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="menu-card rounded-2xl overflow-hidden group reveal">
+          <div class="menu-img-wrapper h-56">
+            <img src="Peri-Peri Wings.jpg" alt="Peri-Peri Wings" class="menu-img" />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold font-serif mb-2" style="color: #1a1a1a;">Peri-Peri Wings</h3>
+            <p class="text-sm leading-relaxed mb-4" style="color: #555;">Crispy grilled chicken wings tossed in our signature peri-peri sauce</p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-bold font-serif" style="color: var(--gold);">R69</span>
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Peri-Peri%20Wings*%20-%20R69" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="menu-card rounded-2xl overflow-hidden group reveal">
+          <div class="menu-img-wrapper h-56">
+            <img src="Close-up Signature Charcoal Burger.jpg" alt="Charcoal Burger" class="menu-img" />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold font-serif mb-2" style="color: #1a1a1a;">Charcoal Burger</h3>
+            <p class="text-sm leading-relaxed mb-4" style="color: #555;">Double patty, smoky bacon, cheddar, caramelised onions, peri-mayo</p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-bold font-serif" style="color: var(--gold);">R109</span>
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Charcoal%20Burger*%20-%20R109" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="menu-card rounded-2xl overflow-hidden group reveal">
+          <div class="menu-img-wrapper h-56">
+            <img src="Whole Grilled Chicken.jpg" alt="Full Grilled Chicken" class="menu-img" />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold font-serif mb-2" style="color: #1a1a1a;">Full Grilled Chicken</h3>
+            <p class="text-sm leading-relaxed mb-4" style="color: #555;">Whole chicken, slow-grilled over charcoal, served with 2 sides & sauce</p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-bold font-serif" style="color: var(--gold);">R189</span>
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Full%20Grilled%20Chicken*%20-%20R189" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MENU CATEGORIES SECTION ========== -->
+  <section id="menu" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-12" style="background: #FFFDE7;">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <span class="text-sm uppercase tracking-[0.2em] font-semibold" style="color: var(--gold);">— Explore —</span>
+        <h2 class="text-3xl sm:text-5xl font-bold font-serif mt-4 section-title" style="color: #1a1a1a;">Our Menu</h2>
+        <p class="mt-6 max-w-xl mx-auto" style="color: #666;">From flame-grilled classics to sweet endings — there's something for everyone</p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+        <button class="filter-btn active px-6 py-2.5 rounded-full text-sm font-semibold border border-gold/30 transition-all" data-filter="all" style="border-color: rgba(212,175,55,0.3); background: var(--gold); color: #0f0f0f;">All</button>
+        <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold border border-gold/30 transition-all" data-filter="burgers" style="border-color: rgba(212,175,55,0.3); color: #333;">Burgers</button>
+        <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold border border-gold/30 transition-all" data-filter="grills" style="border-color: rgba(212,175,55,0.3); color: #333;">Charcoal Grills</button>
+        <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold border border-gold/30 transition-all" data-filter="peri" style="border-color: rgba(212,175,55,0.3); color: #333;">Peri-Peri</button>
+        <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold border border-gold/30 transition-all" data-filter="starters" style="border-color: rgba(212,175,55,0.3); color: #333;">Starters</button>
+        <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold border border-gold/30 transition-all" data-filter="drinks" style="border-color: rgba(212,175,55,0.3); color: #333;">Drinks</button>
+        <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold border border-gold/30 transition-all" data-filter="desserts" style="border-color: rgba(212,175,55,0.3); color: #333;">Desserts</button>
+      </div>
+
+      <!-- Menu Grid -->
+      <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- BURGERS -->
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="burgers">
+          <div class="menu-img-wrapper h-48">
+            <img src="Signature Charcoal Burger.jpg" alt="Signature Charcoal Burger" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Signature Charcoal Burger</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R109</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Double beef patty, smoked bacon, cheddar, caramelised onion, peri-mayo, rocket</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Signature%20Charcoal%20Burger*%20-%20R109" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="burgers">
+          <div class="menu-img-wrapper h-48">
+            <img src="Peri-Peri Chicken Burger.jpg" alt="Peri-Peri Chicken Burger" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Peri-Peri Chicken Burger</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R94</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Grilled peri-peri chicken breast, avocado, lettuce, tomato, peri-mayo</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Peri-Peri%20Chicken%20Burger*%20-%20R94" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="burgers">
+          <div class="menu-img-wrapper h-48">
+            <img src="Double Cheese Bacon Burger.jpg" alt="Double Cheese Bacon Burger" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Double Cheese Bacon</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R124</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Two beef patties, double cheddar, smoked bacon, pickles, special sauce</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Double%20Cheese%20Bacon*%20-%20R124" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHARCOAL GRILLS -->
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="grills">
+          <div class="menu-img-wrapper h-48">
+            <img src="Flame-Grilled Quarter Chicken.jpg" alt="Flame-Grilled Quarter Chicken" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Flame-Grilled Quarter Chicken</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R89</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Quarter chicken, peri-peri basted, charcoal grilled, served with chips & salad</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Flame-Grilled%20Quarter%20Chicken*%20-%20R89" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="grills">
+          <div class="menu-img-wrapper h-48">
+            <img src="Close-up Flame-Grilled Chicken.jpg" alt="Half Chicken Charcoal Grill" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Half Chicken Charcoal Grill</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R139</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Half chicken, slow-grilled, choice of basting, 2 sides & dipping sauce</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Half%20Chicken%20Charcoal%20Grill*%20-%20R139" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="grills">
+          <div class="menu-img-wrapper h-48">
+            <img src="Whole Grilled Chicken.jpg" alt="Whole Grilled Chicken" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Whole Grilled Chicken</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R189</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Whole chicken, charcoal grilled, served with 3 sides, sauce & rolls</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Whole%20Grilled%20Chicken*%20-%20R189" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="grills">
+          <div class="menu-img-wrapper h-48">
+            <img src="Charcoal Grilled Ribs.jpg" alt="Charcoal Grilled Ribs" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Charcoal Grilled Ribs</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R149</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Pork ribs, smoky BBQ glaze, charcoal grilled, chips & coleslaw</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Charcoal%20Grilled%20Ribs*%20-%20R149" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERI-PERI -->
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="peri">
+          <div class="menu-img-wrapper h-48">
+            <img src="Peri-Peri Wings.jpg" alt="Peri-Peri Wings" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Peri-Peri Chicken Wings</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R69</span>
+            </div>
+            <p class="text-sm" style="color: #666;">6 crispy grilled wings, tossed in house peri-peri, blue cheese dip</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Peri-Peri%20Chicken%20Wings*%20-%20R69" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="peri">
+          <div class="menu-img-wrapper h-48">
+            <img src="Close-up Peri-Peri Chicken Burger.jpg" alt="Peri-Peri Chicken Breast" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Peri-Peri Chicken Breast</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R89</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Grilled chicken breast, peri-peri glaze, served with salad & rice</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Peri-Peri%20Chicken%20Breast*%20-%20R89" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="peri">
+          <div class="menu-img-wrapper h-48">
+            <img src="Peri-Peri Platter.jpg" alt="Peri-Peri Platter" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Peri-Peri Platter</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R169</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Wings, drumsticks, breast strips, peri-sauce, 2 sides & dip trio</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Peri-Peri%20Platter*%20-%20R169" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- STARTERS & SIDES -->
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="starters">
+          <div class="menu-img-wrapper h-48">
+            <img src="Loaded Nachos.jpg" alt="Loaded Nachos" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Loaded Nachos</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R79</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Tortilla chips, melted cheese, peri-chicken, guacamole, salsa, sour cream</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Loaded%20Nachos*%20-%20R79" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="starters">
+          <div class="menu-img-wrapper h-48">
+            <img src="Crispy Calamari.jpg" alt="Crispy Calamari" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Crispy Calamari</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R84</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Lightly dusted, flash fried, peri-salt, lemon aioli, rocket salad</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Crispy%20Calamari*%20-%20R84" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="starters">
+          <div class="menu-img-wrapper h-48">
+            <img src="Chips & Dip Trio.jpg" alt="Chips and Dip Trio" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Chips & Dip Trio</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R59</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Hand-cut chips, peri-mayo, garlic aioli, smoky BBQ sauce</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Chips%20%26%20Dip%20Trio*%20-%20R59" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- DRINKS -->
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="drinks">
+          <div class="menu-img-wrapper h-48">
+            <img src="Craft Sodas.jpg" alt="Craft Sodas" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Craft Sodas</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R25</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Artisanal sodas — ginger beer, lemonade, hibiscus, cola</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Craft%20Sodas*%20-%20R25" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="drinks">
+          <div class="menu-img-wrapper h-48">
+            <img src="South African Wines.jpg" alt="South African Wines" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">South African Wines</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R55</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Selected red & white wines by the glass — Chenin, Cabernet, Rosé</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*South%20African%20Wines*%20-%20R55" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="drinks">
+          <div class="menu-img-wrapper h-48">
+            <img src="Local Craft Beers.jpg" alt="Local Craft Beers" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Local Craft Beers</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R45</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Premium SA lagers, IPAs & ciders — ice-cold</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Local%20Craft%20Beers*%20-%20R45" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESSERTS -->
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="desserts">
+          <div class="menu-img-wrapper h-48">
+            <img src="Malva Pudding.jpg" alt="Malva Pudding" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Malva Pudding</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R59</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Classic SA malva pudding, warm, creamy custard, caramel drizzle</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Malva%20Pudding*%20-%20R59" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="desserts">
+          <div class="menu-img-wrapper h-48">
+            <img src="Chocolate Lava Cake.jpg" alt="Chocolate Lava Cake" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Chocolate Lava Cake</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R69</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Rich dark chocolate, molten centre, vanilla ice cream, berry coulis</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Chocolate%20Lava%20Cake*%20-%20R69" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card rounded-2xl overflow-hidden reveal" data-category="desserts">
+          <div class="menu-img-wrapper h-48">
+            <img src="Malva Pudding.jpg" alt="Koeksister Stack" class="menu-img" />
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold font-serif" style="color: #1a1a1a;">Koeksister Stack</h3>
+              <span class="text-lg font-bold font-serif" style="color: var(--gold);">R55</span>
+            </div>
+            <p class="text-sm" style="color: #666;">Golden syrup-coated koeksisters, cinnamon sugar, cream</p>
+            <div class="mt-3">
+              <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Koeksister%20Stack*%20-%20R55" target="_blank" class="text-xs px-4 py-2 rounded-full font-semibold inline-flex items-center gap-1.5" style="background: #25D366; color: white;">Order <i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAMILY COMBOS SECTION ========== -->
+  <section id="combos" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-12" style="background: #FFF8E1;">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="text-sm uppercase tracking-[0.2em] font-semibold" style="color: var(--red);">— Best Value —</span>
+        <h2 class="text-3xl sm:text-5xl font-bold font-serif mt-4 section-title" style="color: #1a1a1a;">Family Combos</h2>
+        <p class="mt-6 max-w-xl mx-auto" style="color: #555;">Feast together with our specially crafted family bundles — perfect for sharing</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Combo 1 -->
+        <div class="combo-card rounded-2xl overflow-hidden text-center relative reveal">
+          <div class="h-56 overflow-hidden">
+            <img src="Family Feast.jpg" alt="Family Feast" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-8">
+            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 text-white" style="background: var(--red);">Popular</span>
+            <h3 class="text-2xl font-bold font-serif mb-2" style="color: #1a1a1a;">Family Feast</h3>
+            <p class="text-sm mb-4" style="color: #555;">1 Whole Grilled Chicken · 4 Sides · 4 Sauces · 4 Rolls</p>
+            <div class="text-4xl font-bold font-serif mb-4" style="color: var(--gold);">R349</div>
+            <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Family%20Feast*%20-%20R349" target="_blank" class="btn-primary text-white px-8 py-3 rounded-full text-sm font-semibold inline-block w-full">Order <i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Combo 2 -->
+        <div class="combo-card rounded-2xl overflow-hidden text-center relative reveal" style="border-color: rgba(212,175,55,0.3); transform: scale(1.02);">
+          <div class="h-56 overflow-hidden">
+            <img src="Ultimate Braai Box.jpg" alt="Ultimate Braai Box" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-8">
+            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4" style="background: var(--gold); color: #0f0f0f;">Best Seller</span>
+            <h3 class="text-2xl font-bold font-serif mb-2" style="color: #1a1a1a;">Ultimate Braai Box</h3>
+            <p class="text-sm mb-4" style="color: #555;">Half Chicken · 4 Wings · 2 Rib Racks · 4 Sides · 6 Sauces</p>
+            <div class="text-4xl font-bold font-serif mb-4" style="color: var(--gold);">R449</div>
+            <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Ultimate%20Braai%20Box*%20-%20R449" target="_blank" class="btn-gold px-8 py-3 rounded-full text-sm font-semibold inline-block w-full">Order <i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Combo 3 -->
+        <div class="combo-card rounded-2xl overflow-hidden text-center relative reveal">
+          <div class="h-56 overflow-hidden">
+            <img src="Date Night Duo.jpg" alt="Date Night Duo" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-8">
+            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 text-white" style="background: var(--red-dark);">For 2</span>
+            <h3 class="text-2xl font-bold font-serif mb-2" style="color: #1a1a1a;">Date Night Duo</h3>
+            <p class="text-sm mb-4" style="color: #555;">2 Quarter Chickens · 2 Sides · 2 Desserts · 2 Drinks</p>
+            <div class="text-4xl font-bold font-serif mb-4" style="color: var(--gold);">R249</div>
+            <a href="https://wa.me/27787757734?text=I'd%20like%20to%20order%3A%0A*Date%20Night%20Duo*%20-%20R249" target="_blank" class="btn-primary text-white px-8 py-3 rounded-full text-sm font-semibold inline-block w-full">Order <i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHY CHOOSE US ========== -->
+  <section id="about" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-12" style="background: #FFF8E1;">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal">
+        <!-- Left: Image -->
+        <div class="relative">
+          <div class="rounded-2xl overflow-hidden aspect-[4/3] relative flex items-center justify-center">
+            <img src="chicken-grilled.jpg" alt="Charcoal Grilled Chicken" class="w-full h-full object-cover absolute inset-0" />
+            <div class="absolute inset-0 flex items-center justify-center" style="background: rgba(0,0,0,0.4);">
+              <div class="text-center p-8">
+                <h3 class="text-2xl font-bold font-serif text-white mb-2">The Art of Charcoal</h3>
+                <p class="text-sm" style="color: var(--gold);">Est. 2020 · Johannesburg</p>
+              </div>
+            </div>
+          </div>
+          <!-- Floating badge -->
+          <div class="absolute -bottom-4 -right-4 w-28 h-28 rounded-2xl flex flex-col items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, var(--gold), #b8962f);">
+            <span class="text-3xl font-bold text-[#0f0f0f]">4.9</span>
+            <span class="text-xs font-semibold text-[#0f0f0f]">★★★★★</span>
+          </div>
+        </div>
+
+        <!-- Right: Content -->
+        <div>
+          <span class="text-sm uppercase tracking-[0.2em] font-semibold" style="color: var(--gold);">— Our Story —</span>
+          <h2 class="text-3xl sm:text-5xl font-bold font-serif mt-4 mb-6" style="color: #1a1a1a;">Where Fire Meets<br class="hidden sm:block" />Flavour</h2>
+          <div class="space-y-4 leading-relaxed" style="color: #555;">
+            <p>At <strong style="color: #1a1a1a;">Fiestas Chicken</strong>, we believe in the primal power of fire. Every piece of chicken that leaves our kitchen has been carefully marinated, spiced with our secret peri-peri blend, and slow-grilled over authentic charcoal — the way nature intended.</p>
+            <p>Founded in the heart of <strong style="color: #1a1a1a;">Johannesburg</strong> in 2020, our mission is simple: bring people together over the unmistakable flavour of charcoal-grilled perfection. We source only the freshest, free-range chicken and pair it with bold South African flavours.</p>
+            <p>Our charcoal burns hot, our spices hit hard, and our standards never drop. From our family to yours — <strong style="color: var(--gold);">braai with passion.</strong></p>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-6 mt-10 pt-10 border-t" style="border-color: rgba(212,175,55,0.1);">
+            <div>
+              <div class="text-3xl font-bold font-serif" style="color: var(--gold);">50+</div>
+              <div class="text-xs uppercase tracking-wider mt-1" style="color: #777;">Menu Items</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold font-serif" style="color: var(--gold);">15k+</div>
+              <div class="text-xs uppercase tracking-wider mt-1" style="color: #777;">Happy Guests</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold font-serif" style="color: var(--gold);">4.9★</div>
+              <div class="text-xs uppercase tracking-wider mt-1" style="color: #777;">Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TESTIMONIALS SECTION ========== -->
+  <section id="testimonials" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-12" style="background: #FFFDE7;">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="text-sm uppercase tracking-[0.2em] font-semibold" style="color: var(--gold);">— Guest Reviews —</span>
+        <h2 class="text-3xl sm:text-5xl font-bold font-serif mt-4 section-title" style="color: #1a1a1a;">What Our Guests Say</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="testimonial-card rounded-2xl p-6 lg:p-8 reveal">
+          <div class="flex gap-1 text-yellow-500 mb-4">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="leading-relaxed mb-6 text-sm" style="color: #555;">"The best charcoal chicken in Joburg! The peri-peri wings are absolutely addictive. The flame-grilled flavour is unmatched. My whole family loves it!"</p>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(135deg, var(--red), rgba(212,175,55,0.3));">TK</div>
+            <div>
+              <h4 class="font-semibold text-sm" style="color: #1a1a1a;">Thabo K.</h4>
+              <p class="text-xs" style="color: #777;">Regular Guest</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card rounded-2xl p-6 lg:p-8 reveal">
+          <div class="flex gap-1 text-yellow-500 mb-4">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="leading-relaxed mb-6 text-sm" style="color: #555;">"I've travelled all over SA and Fiestas has the best charcoal grills. The Ultimate Braai Box is incredible value. Uber Eats delivery is always hot and fresh!"</p>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(135deg, #b8860b, rgba(212,175,55,0.3));">LM</div>
+            <div>
+              <h4 class="font-semibold text-sm" style="color: #1a1a1a;">Lindiwe M.</h4>
+              <p class="text-xs" style="color: #777;">Verified Review</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card rounded-2xl p-6 lg:p-8 reveal">
+          <div class="flex gap-1 text-yellow-500 mb-4">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="leading-relaxed mb-6 text-sm" style="color: #555;">"Finally a place that takes charcoal grilling seriously. The Malva pudding is the perfect ending. Beautiful atmosphere, amazing food. 10/10!"</p>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(135deg, #8b0000, rgba(212,175,55,0.3));">DN</div>
+            <div>
+              <h4 class="font-semibold text-sm" style="color: #1a1a1a;">David N.</h4>
+              <p class="text-xs" style="color: #777;">Google Reviews</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT / LOCATIONS SECTION ========== -->
+  <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-12" style="background: #FFF8E1;">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="text-sm uppercase tracking-[0.2em] font-semibold" style="color: var(--gold);">— Get in Touch —</span>
+        <h2 class="text-3xl sm:text-5xl font-bold font-serif mt-4 section-title" style="color: #1a1a1a;">Visit & Order</h2>
+        <p class="mt-6 max-w-xl mx-auto" style="color: #666;">Find us in Johannesburg or order online for delivery straight to your door</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <!-- Left: Info + Map -->
+        <div class="space-y-8 reveal">
+          <!-- Info cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="rounded-xl p-6 border flex items-start gap-4" style="background: #f9f9f9; border-color: #eee;">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(200,16,46,0.15);">
+                <i class="fas fa-location-dot text-xl" style="color: var(--gold);"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm mb-1" style="color: #1a1a1a;">Visit Us</h4>
+                <p class="text-xs leading-relaxed" style="color: #666;">Cnr Print & Zeiss Rd<br />Laser Park, Johannesburg<br />2040</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl p-6 border flex items-start gap-4" style="background: #f9f9f9; border-color: #eee;">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(200,16,46,0.15);">
+                <i class="fas fa-clock text-xl" style="color: var(--gold);"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm mb-1" style="color: #1a1a1a;">Opening Hours</h4>
+                <p class="text-xs leading-relaxed" style="color: #666;">Mon–Sat: 11:00 – 22:00<br />Sun: 12:00 – 20:00</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="rounded-xl p-6 border flex items-start gap-4" style="background: #f9f9f9; border-color: #eee;">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(200,16,46,0.15);">
+                <i class="fas fa-phone text-xl" style="color: var(--gold);"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm mb-1" style="color: #1a1a1a;">Call Us</h4>
+                <p class="text-xs leading-relaxed" style="color: #666;">078 775 7734</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl p-6 border flex items-start gap-4" style="background: #f9f9f9; border-color: #eee;">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(200,16,46,0.15);">
+                <i class="fas fa-envelope text-xl" style="color: var(--gold);"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sm mb-1" style="color: #1a1a1a;">Email</h4>
+                <p class="text-xs leading-relaxed" style="color: #666;">info@fiestaschicken.co.za</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="rounded-2xl overflow-hidden h-56 border" style="border-color: #eee;">
+            <iframe src="https://www.google.com/maps?q=Cnr+Print+%26+Zeiss+Rd,+Laser+Park,+Johannesburg+2040&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <!-- Delivery Buttons -->
+          <div>
+            <h4 class="font-semibold mb-4" style="color: #1a1a1a;">Order for Delivery</h4>
+            <div class="flex flex-wrap gap-4">
+              <a href="#" class="delivery-btn text-white" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                <i class="fas fa-bicycle"></i> Uber Eats
+              </a>
+              <a href="#" class="delivery-btn text-white" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                <i class="fas fa-motorcycle"></i> Mr D
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Reservation Form -->
+        <div class="reveal">
+          <div class="rounded-2xl p-8 border" style="background: #f9f9f9; border-color: #eee;">
+            <h3 class="text-2xl font-bold font-serif mb-2" style="color: #1a1a1a;">Make a Reservation</h3>
+            <p class="text-sm mb-8" style="color: #666;">Book your table for an unforgettable charcoal-grilled experience</p>
+
+            <form class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="text-xs uppercase tracking-wider block mb-2" style="color: #777;">Full Name</label>
+                  <input type="text" class="form-input w-full rounded-xl px-4 py-3 text-sm" placeholder="Your name" />
+                </div>
+                <div>
+                  <label class="text-xs uppercase tracking-wider block mb-2" style="color: #777;">Email</label>
+                  <input type="email" class="form-input w-full rounded-xl px-4 py-3 text-sm" placeholder="your@email.com" />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="text-xs uppercase tracking-wider block mb-2" style="color: #777;">Date</label>
+                  <input type="date" class="form-input w-full rounded-xl px-4 py-3 text-sm" />
+                </div>
+                <div>
+                  <label class="text-xs uppercase tracking-wider block mb-2" style="color: #777;">Time</label>
+                  <input type="time" class="form-input w-full rounded-xl px-4 py-3 text-sm" />
+                </div>
+              </div>
+              <div>
+                <label class="text-xs uppercase tracking-wider block mb-2" style="color: #777;">Guests</label>
+                <select class="form-input w-full rounded-xl px-4 py-3 text-sm">
+                  <option>1 Guest</option>
+                  <option>2 Guests</option>
+                  <option>3 Guests</option>
+                  <option>4 Guests</option>
+                  <option>5+ Guests</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-xs uppercase tracking-wider block mb-2" style="color: #777;">Special Requests</label>
+                <textarea rows="3" class="form-input w-full rounded-xl px-4 py-3 text-sm" placeholder="Allergies, celebrations..."></textarea>
+              </div>
+              <button type="submit" class="btn-primary text-white w-full py-4 rounded-xl font-semibold text-sm">
+                <i class="fas fa-calendar-check mr-2"></i> Confirm Reservation
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="py-16 px-4 sm:px-6 lg:px-12 border-t" style="background: #ffffff; border-color: #eee;">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+        <!-- Brand -->
+        <div class="sm:col-span-2 lg:col-span-1">
+          <a href="#" class="flex items-center gap-3 mb-4">
+            <img src="logo.jpg" alt="Fiestas Chicken Logo" class="w-10 h-10 rounded-full object-cover" />
+            <span class="font-bold text-lg font-serif" style="color: #1a1a1a;">Fiestas Chicken</span>
+          </a>
+          <p class="text-sm leading-relaxed mb-6" style="color: #666;">Authentic charcoal-grilled chicken in the heart of Johannesburg. Fire. Flavour. Family.</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #f0f0f0; border-color: #ddd; color: #888;"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #f0f0f0; border-color: #ddd; color: #888;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #f0f0f0; border-color: #ddd; color: #888;"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-semibold text-sm uppercase tracking-wider mb-5" style="color: #1a1a1a;">Quick Links</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#menu" class="footer-link" style="color: #666;">Menu</a></li>
+            <li><a href="#combos" class="footer-link" style="color: #666;">Family Combos</a></li>
+            <li><a href="#about" class="footer-link" style="color: #666;">About Us</a></li>
+            <li><a href="#testimonials" class="footer-link" style="color: #666;">Reviews</a></li>
+            <li><a href="#contact" class="footer-link" style="color: #666;">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="font-semibold text-sm uppercase tracking-wider mb-5" style="color: #1a1a1a;">Contact</h4>
+          <ul class="space-y-3 text-sm" style="color: #666;">
+            <li>Cnr Print & Zeiss Rd, Laser Park</li>
+            <li>Johannesburg, 2040</li>
+            <li>078 775 7734</li>
+            <li>info@fiestaschicken.co.za</li>
+          </ul>
+        </div>
+
+        <!-- Hours -->
+        <div>
+          <h4 class="font-semibold text-sm uppercase tracking-wider mb-5" style="color: #1a1a1a;">Hours</h4>
+          <ul class="space-y-3 text-sm" style="color: #666;">
+            <li class="flex justify-between"><span>Mon–Thu</span><span style="color: #1a1a1a;">11:00–22:00</span></li>
+            <li class="flex justify-between"><span>Fri–Sat</span><span style="color: #1a1a1a;">11:00–23:00</span></li>
+            <li class="flex justify-between"><span>Sunday</span><span style="color: #1a1a1a;">12:00–20:00</span></li>
+          </ul>
+          <div class="mt-6 pt-6 border-t flex flex-wrap gap-3" style="border-color: #eee;">
+            <a href="#" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white" style="background: #2ecc71;"><i class="fab fa-uber mr-1"></i> Uber Eats</a>
+            <a href="#" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white" style="background: #e74c3c;"><i class="fas fa-motorcycle mr-1"></i> Mr D</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4 text-xs" style="border-color: #eee; color: #888;">
+        <p>&copy; 2024 Fiestas Chicken. All rights reserved.</p>
+        <p>Website by <a href="https://stopher-malik.co.za" target="_blank" class="hover:text-gold transition-colors" style="color: var(--gold);">Stopher Malik</a> &amp; <a href="https://smk.stopher-malik.co.za" target="_blank" class="hover:text-gold transition-colors" style="color: var(--gold);">SMK Web Design</a></p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-gold transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-gold transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    // === FLAME GENERATION ===
+    function createFlames() {
+      const wrapper = document.getElementById('flameWrapper');
+      if (!wrapper) return;
+      wrapper.innerHTML = '';
+      const flameCount = 5;
+      for (let i = 0; i < flameCount; i++) {
+        const flame = document.createElement('div');
+        flame.className = 'flame';
+        const w = 16 + Math.random() * 20;
+        flame.style.width = w + 'px';
+        flame.style.height = (55 + Math.random() * 50) + 'px';
+        flame.style.left = (38 + (i * 6) - Math.random() * 8) + '%';
+        flame.style.animationDuration = (0.45 + Math.random() * 0.65) + 's';
+        flame.style.animationDelay = (Math.random() * 0.3) + 's';
+        flame.style.opacity = 0.65 + Math.random() * 0.35;
+        wrapper.appendChild(flame);
+      }
+      for (let i = 0; i < 14; i++) {
+        const ember = document.createElement('div');
+        ember.className = 'ember';
+        ember.style.left = (28 + Math.random() * 44) + '%';
+        ember.style.width = (3 + Math.random() * 4) + 'px';
+        ember.style.height = ember.style.width;
+        ember.style.animationDuration = (1.0 + Math.random() * 2.0) + 's';
+        ember.style.animationDelay = '-' + (Math.random() * 2.5) + 's';
+        wrapper.appendChild(ember);
+      }
+    }
+
+    // Background embers (hero)
+    function createBgEmbers() {
+      const container = document.getElementById('bgEmbers');
+      if (!container) return;
+      for (let i = 0; i < 20; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'ember';
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.top = (40 + Math.random() * 50) + '%';
+        dot.style.width = (2 + Math.random() * 4) + 'px';
+        dot.style.height = dot.style.width;
+        dot.style.opacity = 0.2 + Math.random() * 0.3;
+        dot.style.animationDuration = (2 + Math.random() * 4) + 's';
+        dot.style.animationDelay = '-' + (Math.random() * 4) + 's';
+        container.appendChild(dot);
+      }
+    }
+
+    // === NAVBAR SCROLL ===
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // === MOBILE MENU TOGGLE ===
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuToggle.addEventListener('click', () => {
+      const icon = menuToggle.querySelector('i');
+      mobileMenu.classList.toggle('hidden');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
+      });
+    });
+
+    // === MENU FILTER ===
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const menuItems = document.querySelectorAll('#menuGrid .menu-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        menuItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.style.display = 'block';
+            item.style.animation = 'fadeIn 0.4s ease';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // === SCROLL REVEAL ===
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // === INIT ===
+    document.addEventListener('DOMContentLoaded', () => {
+      createFlames();
+      createBgEmbers();
+      // Periodic flame refresh for dynamic feel
+      setInterval(createFlames, 7000);
+    });
+  </script>
+</body>
+</html>
