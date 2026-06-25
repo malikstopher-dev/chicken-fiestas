@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chicken-fiestas.pages.dev/sitemap.xml
