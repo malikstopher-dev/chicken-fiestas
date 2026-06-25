@@ -150,6 +150,20 @@
       width: 100%; height: 100%; object-fit: cover;
     }
 
+    @media (max-width: 640px) {
+      .menu-card > div { padding: 12px !important; }
+      .menu-img-wrapper { height: 130px !important; }
+      .menu-card h3 { font-size: 0.9rem !important; }
+      .menu-card h3 + span { font-size: 0.9rem !important; }
+      .menu-card .text-2xl { font-size: 1.1rem !important; }
+      .menu-card p { font-size: 0.7rem !important; line-height: 1.3 !important; }
+      .menu-card .mb-4 { margin-bottom: 6px !important; }
+      .menu-card .mb-2 { margin-bottom: 4px !important; }
+      .menu-card .mt-3 { margin-top: 6px !important; }
+      .menu-card [style*="background: #25D366"] { font-size: 0.65rem !important; padding: 4px 10px !important; }
+      .menu-card .flex.items-center.justify-between { gap: 8px !important; }
+    }
+
     /* Category filter buttons */
     .filter-btn.active {
       background: var(--gold); color: #0f0f0f; border-color: var(--gold);
