@@ -577,16 +577,17 @@
         <a href="#testimonials" class="text-gray-300 hover:text-gold transition-colors text-sm font-medium" style="--gold: var(--gold);">Reviews</a>
         <a href="#contact" class="text-gray-300 hover:text-gold transition-colors text-sm font-medium" style="--gold: var(--gold);">Contact</a>
         <a href="#menu" class="btn-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold">Order Now</a>
-        <!-- Cart Icon -->
-        <button id="cartToggle" class="relative text-white text-xl p-2 ml-2" aria-label="Open cart">
+      </div>
+      <!-- Right: Cart + Hamburger (always visible) -->
+      <div class="flex items-center gap-1">
+        <button id="cartToggle" class="relative text-white text-xl p-2" aria-label="Open cart">
           <i class="fas fa-shopping-bag"></i>
           <span id="cartBadge" class="cart-badge">0</span>
         </button>
+        <button id="menuToggle" class="lg:hidden text-white text-2xl p-2" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
       </div>
-      <!-- Mobile Hamburger -->
-      <button id="menuToggle" class="lg:hidden text-white text-2xl p-2" aria-label="Toggle menu">
-        <i class="fas fa-bars"></i>
-      </button>
     </div>
     <!-- Mobile Menu -->
     <div id="mobileMenu" class="lg:hidden hidden mt-4 bg-charcoal/95 backdrop-blur-xl rounded-2xl p-6 border border-gold/10" style="background: rgba(15,15,15,0.97);">
@@ -597,9 +598,6 @@
         <a href="#testimonials" class="text-gray-300 hover:text-gold transition-colors py-2">Reviews</a>
         <a href="#contact" class="text-gray-300 hover:text-gold transition-colors py-2">Contact</a>
         <a href="#menu" class="btn-primary text-white px-6 py-3 rounded-full text-sm font-semibold mt-2">Order Now</a>
-        <button id="cartToggleMobile" class="text-white text-xl py-2 mt-2 flex items-center justify-center gap-2" aria-label="Open cart">
-          <i class="fas fa-shopping-bag"></i> Cart <span id="cartBadgeMobile" class="inline-flex items-center justify-center text-xs font-bold" style="background: var(--red); color: #fff; border-radius: 50%; width: 20px; height: 20px;">0</span>
-        </button>
       </div>
     </div>
   </nav>
@@ -1593,10 +1591,8 @@
 
     function updateCartUI() {
       const badge = document.getElementById('cartBadge');
-      const badgeMobile = document.getElementById('cartBadgeMobile');
       const count = getCartCount();
       badge.style.display = 'flex'; badge.textContent = count;
-      badgeMobile.style.display = 'inline-flex'; badgeMobile.textContent = count;
       renderCart();
     }
 
@@ -1684,7 +1680,6 @@
 
     // Cart toggle events
     document.getElementById('cartToggle').addEventListener('click', openCart);
-    document.getElementById('cartToggleMobile').addEventListener('click', openCart);
     document.getElementById('cartClose').addEventListener('click', closeCart);
     document.getElementById('cartOverlay').addEventListener('click', closeCart);
     document.getElementById('cartCheckout').addEventListener('click', checkout);
