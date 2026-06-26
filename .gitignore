@@ -30,3 +30,10 @@ mdYF3.jpg
 tfJZk.jpg
 wyL6z.jpg
 zGN2j.jpg
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
