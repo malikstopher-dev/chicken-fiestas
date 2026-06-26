@@ -470,6 +470,50 @@
         100% { transform: translateY(-100px) scale(0.3); opacity: 0; }
       }
     }
+
+    /* Bottom Nav (mobile only) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(15,15,15,0.97);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(212,175,55,0.15);
+      display: none;
+      padding: 8px 12px;
+      padding-bottom: calc(8px + env(safe-area-inset-bottom, 4px));
+    }
+    @media (max-width: 1023px) {
+      .bottom-nav { display: flex; }
+      body { padding-bottom: 72px; }
+    }
+    .bottom-nav a {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .bottom-nav .btn-explore {
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(200,16,46,0.35);
+    }
+    .bottom-nav .btn-explore:hover { transform: translateY(-1px); box-shadow: 0 6px 25px rgba(200,16,46,0.5); }
+    .bottom-nav .btn-order {
+      background: linear-gradient(135deg, var(--gold), #b8962f);
+      color: #0f0f0f;
+      box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+    }
+    .bottom-nav .btn-order:hover { transform: translateY(-1px); box-shadow: 0 6px 25px rgba(212,175,55,0.45); }
   </style>
   <script type="application/ld+json">
   {
@@ -1324,6 +1368,12 @@
       </div>
     </div>
   </section>
+
+  <!-- ========== BOTTOM NAV (MOBILE) ========== -->
+  <div class="bottom-nav items-center gap-2">
+    <a href="#menu" class="btn-explore"><i class="fas fa-fire"></i> Explore Menu</a>
+    <a href="#contact" class="btn-order"><i class="fas fa-truck"></i> Order Online</a>
+  </div>
 
   <!-- ========== FOOTER ========== -->
   <footer class="py-16 px-4 sm:px-6 lg:px-12 border-t" style="background: #ffffff; border-color: #eee;">
