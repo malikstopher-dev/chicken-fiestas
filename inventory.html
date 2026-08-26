@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,245 +13,457 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
+
+    /* ============ THEME VARIABLES ============ */
+    :root, [data-theme="dark"] {
       --red: #C8102E;
       --red-dark: #8B1E2E;
       --gold: #D4AF37;
       --gold-light: #E8B923;
-      --bg-dark: #0A0A0A;
-      --bg-card: #111111;
-      --bg-surface: #1A1A1A;
-      --bg-input: #1E1E1E;
-      --text-body: #B0B0B0;
-      --text-light: #E5E5E5;
+      --bg-body: #060608;
+      --bg-card: #0e0e12;
+      --bg-surface: #15151a;
+      --bg-input: #1a1a22;
+      --bg-hover: #1f1f28;
+      --text-body: #9a9ab0;
+      --text-light: #e8e8f0;
+      --text-muted: #555568;
+      --border: #1e1e2a;
+      --border-focus: #D4AF37;
       --green: #2ecc71;
       --orange: #f39c12;
+      --shadow: 0 8px 32px rgba(0,0,0,0.4);
+      --glass: rgba(14,14,18,0.8);
+      --glass-border: rgba(255,255,255,0.06);
     }
+    [data-theme="light"] {
+      --bg-body: #f4f4f8;
+      --bg-card: #ffffff;
+      --bg-surface: #f0f0f5;
+      --bg-input: #eaeaf0;
+      --bg-hover: #e0e0e8;
+      --text-body: #4a4a5a;
+      --text-light: #1a1a2a;
+      --text-muted: #8888a0;
+      --border: #d8d8e0;
+      --border-focus: #C8102E;
+      --shadow: 0 8px 32px rgba(0,0,0,0.08);
+      --glass: rgba(255,255,255,0.85);
+      --glass-border: rgba(0,0,0,0.06);
+    }
+
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg-dark);
+      background: var(--bg-body);
       color: var(--text-body);
       min-height: 100vh;
+      transition: background 0.4s ease, color 0.4s ease;
     }
     h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--text-light); }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-dark); }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #555; }
 
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ============ LOGIN ============ */
     #login-screen { display: flex; }
     #app { display: none; }
     #app.active { display: block; }
 
     .login-card {
       background: var(--bg-card);
-      border: 1px solid #222;
-      border-radius: 16px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      animation: fadeSlideUp 0.6s ease;
     }
     .login-input {
       background: var(--bg-input);
-      border: 1px solid #333;
+      border: 1.5px solid var(--border);
       color: var(--text-light);
-      border-radius: 10px;
-      padding: 12px 16px;
+      border-radius: 12px;
+      padding: 13px 16px;
       width: 100%;
       font-size: 14px;
-      transition: border-color 0.3s;
-    }
-    .login-input:focus { outline: none; border-color: var(--gold); }
-    .login-input::placeholder { color: #555; }
-
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid #222;
-      border-radius: 14px;
-      padding: 20px 24px;
       transition: all 0.3s;
     }
-    .stat-card:hover { border-color: #333; transform: translateY(-2px); }
+    .login-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+    .login-input::placeholder { color: var(--text-muted); }
 
+    /* ============ ANIMATIONS ============ */
+    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .animate-in { animation: fadeSlideUp 0.5s ease both; }
+    .animate-in-delay-1 { animation-delay: 0.1s; }
+    .animate-in-delay-2 { animation-delay: 0.2s; }
+    .animate-in-delay-3 { animation-delay: 0.3s; }
+    .animate-in-delay-4 { animation-delay: 0.4s; }
+
+    /* ============ STAT CARDS ============ */
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 24px;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .stat-card:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+    .stat-card:hover .stat-icon { transform: scale(1.1) rotate(-3deg); }
+    .stat-value { animation: countUp 0.6s ease both; }
+
+    /* ============ BUTTONS ============ */
     .btn-primary {
       background: linear-gradient(135deg, var(--red), var(--red-dark));
       color: white;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(200,16,46,0.3);
+      box-shadow: 0 4px 20px rgba(200,16,46,0.25);
       border: none;
-      border-radius: 10px;
-      padding: 10px 20px;
+      border-radius: 12px;
+      padding: 11px 22px;
       font-weight: 600;
+      font-size: 13px;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,16,46,0.5); }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,16,46,0.4); }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:active { transform: translateY(0); }
 
     .btn-gold {
       background: linear-gradient(135deg, var(--gold), #B8962E);
       color: #0A0A0A;
-      font-weight: 600;
+      font-weight: 700;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+      box-shadow: 0 4px 20px rgba(212,175,55,0.25);
       border: none;
-      border-radius: 10px;
-      padding: 10px 20px;
+      border-radius: 12px;
+      padding: 11px 22px;
+      font-size: 13px;
       cursor: pointer;
     }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,175,55,0.5); }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,175,55,0.4); }
 
     .btn-outline {
-      border: 2px solid var(--gold);
+      border: 1.5px solid var(--gold);
       color: var(--gold);
       background: transparent;
       transition: all 0.3s ease;
-      border-radius: 10px;
-      padding: 8px 16px;
+      border-radius: 12px;
+      padding: 9px 18px;
       font-weight: 600;
+      font-size: 13px;
       cursor: pointer;
     }
     .btn-outline:hover { background: var(--gold); color: #0A0A0A; transform: translateY(-2px); }
 
     .btn-sm {
-      padding: 6px 12px;
-      font-size: 12px;
-      border-radius: 8px;
-      font-weight: 600;
+      padding: 7px 11px;
+      font-size: 11px;
+      border-radius: 9px;
+      font-weight: 700;
       cursor: pointer;
       border: none;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-    .btn-stock-in { background: var(--green); color: #fff; }
-    .btn-stock-in:hover { background: #27ae60; }
-    .btn-stock-out { background: var(--red); color: #fff; }
-    .btn-stock-out:hover { background: #a01020; }
-    .btn-edit { background: var(--gold); color: #0A0A0A; }
-    .btn-edit:hover { background: #c9a430; }
-    .btn-delete { background: #333; color: #ccc; }
-    .btn-delete:hover { background: #444; color: #fff; }
+    .btn-sm:active { transform: scale(0.92); }
+    .btn-stock-in { background: linear-gradient(135deg, #2ecc71, #27ae60); color: #fff; box-shadow: 0 2px 8px rgba(46,204,113,0.3); }
+    .btn-stock-in:hover { box-shadow: 0 4px 16px rgba(46,204,113,0.5); transform: translateY(-1px); }
+    .btn-stock-out { background: linear-gradient(135deg, var(--red), #a01020); color: #fff; box-shadow: 0 2px 8px rgba(200,16,46,0.3); }
+    .btn-stock-out:hover { box-shadow: 0 4px 16px rgba(200,16,46,0.5); transform: translateY(-1px); }
+    .btn-edit { background: linear-gradient(135deg, var(--gold), #c9a430); color: #0A0A0A; box-shadow: 0 2px 8px rgba(212,175,55,0.3); }
+    .btn-edit:hover { box-shadow: 0 4px 16px rgba(212,175,55,0.5); transform: translateY(-1px); }
+    .btn-delete { background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border); }
+    .btn-delete:hover { background: var(--red); color: #fff; border-color: var(--red); }
 
-    .form-input {
+    /* ============ FORMS ============ */
+    .form-input, .form-select {
       background: var(--bg-input);
-      border: 1px solid #333;
+      border: 1.5px solid var(--border);
       color: var(--text-light);
-      border-radius: 10px;
-      padding: 10px 14px;
+      border-radius: 12px;
+      padding: 11px 14px;
       width: 100%;
       font-size: 14px;
-      transition: border-color 0.3s;
+      transition: all 0.3s;
     }
-    .form-input:focus { outline: none; border-color: var(--gold); }
-    .form-input::placeholder { color: #555; }
-    .form-select {
-      background: var(--bg-input);
-      border: 1px solid #333;
-      color: var(--text-light);
-      border-radius: 10px;
-      padding: 10px 14px;
-      width: 100%;
-      font-size: 14px;
-      transition: border-color 0.3s;
-      cursor: pointer;
-    }
-    .form-select:focus { outline: none; border-color: var(--gold); }
+    .form-input:focus, .form-select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+    .form-input::placeholder { color: var(--text-muted); }
+    .form-select { cursor: pointer; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239a9ab0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
     .form-select option { background: var(--bg-card); color: var(--text-light); }
 
+    .search-wrap { position: relative; }
+    .search-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 13px; pointer-events: none; }
     .search-box {
       background: var(--bg-input);
-      border: 1px solid #333;
+      border: 1.5px solid var(--border);
       color: var(--text-light);
-      border-radius: 10px;
-      padding: 10px 14px 10px 40px;
+      border-radius: 12px;
+      padding: 11px 14px 11px 40px;
       width: 100%;
       font-size: 14px;
-      transition: border-color 0.3s;
+      transition: all 0.3s;
     }
-    .search-box:focus { outline: none; border-color: var(--gold); }
-    .search-box::placeholder { color: #555; }
+    .search-box:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+    .search-box::placeholder { color: var(--text-muted); }
 
+    /* ============ BADGES ============ */
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       padding: 4px 10px;
       border-radius: 20px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
     }
-    .badge-instock { background: rgba(46,204,113,0.15); color: var(--green); }
-    .badge-lowstock { background: rgba(243,156,18,0.15); color: var(--orange); }
-    .badge-outofstock { background: rgba(200,16,46,0.15); color: var(--red); }
+    .badge-instock { background: rgba(46,204,113,0.12); color: var(--green); }
+    .badge-lowstock { background: rgba(243,156,18,0.12); color: var(--orange); }
+    .badge-outofstock { background: rgba(200,16,46,0.12); color: var(--red); }
 
+    /* ============ TABLE ============ */
     .table-wrap {
       background: var(--bg-card);
-      border: 1px solid #222;
-      border-radius: 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
     table { width: 100%; border-collapse: collapse; }
     th {
       background: var(--bg-surface);
       color: var(--gold);
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 1px;
       padding: 14px 16px;
       text-align: left;
-      border-bottom: 1px solid #222;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 2;
     }
     td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #1a1a1a;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
       font-size: 13px;
       vertical-align: middle;
+      transition: background 0.2s;
     }
-    tr:hover { background: rgba(255,255,255,0.02); }
-    tr.row-lowstock { background: rgba(243,156,18,0.06); }
-    tr.row-outofstock { background: rgba(200,16,46,0.06); }
+    tr { transition: all 0.25s; }
+    tr:hover td { background: var(--bg-hover); }
+    tr.row-lowstock td { background: rgba(243,156,18,0.04); }
+    tr.row-outofstock td { background: rgba(200,16,46,0.04); }
+    tr.dragging { opacity: 0.5; background: var(--bg-surface); }
+    tr.drag-over td { border-top: 2px solid var(--gold); }
 
+    /* ============ CHARTS ============ */
+    .chart-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .chart-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: var(--bg-surface);
+      overflow: hidden;
+      position: relative;
+    }
+    .chart-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .chart-bar-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 2s infinite;
+      background-size: 200% 100%;
+    }
+    .donut-chart {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .donut-center {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: absolute;
+      z-index: 1;
+    }
+
+    /* ============ MODALS ============ */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
       z-index: 100;
       justify-content: center;
       align-items: center;
+      padding: 16px;
     }
-    .modal-overlay.active { display: flex; }
+    .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
     .modal-card {
       background: var(--bg-card);
-      border: 1px solid #333;
-      border-radius: 16px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
       padding: 28px;
-      width: 90%;
-      max-width: 480px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+      animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* ============ TOAST ============ */
     .toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
       padding: 14px 24px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 13px;
       font-weight: 600;
       z-index: 200;
       transform: translateY(100px);
       opacity: 0;
-      transition: all 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .toast.show { transform: translateY(0); opacity: 1; }
-    .toast-success { background: var(--green); color: #fff; }
-    .toast-error { background: var(--red); color: #fff; }
-    .toast-warning { background: var(--orange); color: #fff; }
+    .toast-success { background: linear-gradient(135deg, #2ecc71, #27ae60); color: #fff; }
+    .toast-error { background: linear-gradient(135deg, var(--red), #a01020); color: #fff; }
+    .toast-warning { background: linear-gradient(135deg, var(--orange), #e67e22); color: #fff; }
 
-    .empty-state { padding: 60px 20px; text-align: center; color: #555; }
+    .empty-state { padding: 60px 20px; text-align: center; color: var(--text-muted); }
+
+    /* ============ THEME TOGGLE ============ */
+    .theme-toggle {
+      width: 48px; height: 26px;
+      border-radius: 13px;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .theme-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    [data-theme="light"] .theme-toggle::after { transform: translateX(22px); }
+
+    /* ============ MOBILE BOTTOM NAV ============ */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-top: 1px solid var(--glass-border);
+      padding: 8px 16px;
+      padding-bottom: calc(8px + env(safe-area-inset-bottom, 8px));
+      z-index: 50;
+      box-shadow: 0 -4px 30px rgba(0,0,0,0.2);
+    }
+    .mobile-nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      text-decoration: none;
+    }
+    .mobile-nav-btn.active, .mobile-nav-btn:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+    .mobile-nav-btn i { font-size: 18px; }
 
     @media (max-width: 768px) {
       .table-wrap { overflow-x: auto; }
-      table { min-width: 800px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      table { min-width: 850px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+      .stat-card { padding: 16px; }
       .form-grid { grid-template-columns: 1fr !important; }
+      .mobile-bottom-nav { display: flex; justify-content: space-around; }
+      .desktop-only { display: none !important; }
+      body { padding-bottom: 80px; }
+      .charts-grid { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr !important; }
+      .stat-card { padding: 14px 12px; }
+      .stat-icon { width: 36px; height: 36px; font-size: 15px; }
     }
   </style>
 </head>
@@ -261,26 +473,31 @@
   <div id="login-screen" class="min-h-screen items-center justify-center p-4">
     <div class="login-card p-8 w-full max-w-sm">
       <div class="text-center mb-8">
-        <img src="logo.jpg" alt="Fiestas Chicken" class="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
+        <div class="relative inline-block mb-4">
+          <img src="logo.jpg" alt="Fiestas Chicken" class="w-18 h-18 rounded-full mx-auto object-cover" style="width:72px;height:72px;" />
+          <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center" style="background: var(--green);">
+            <i class="fas fa-lock text-white" style="font-size:10px;"></i>
+          </div>
+        </div>
         <h1 class="text-2xl font-bold" style="font-family: 'Playfair Display', serif; color: var(--text-light);">Inventory Panel</h1>
-        <p class="text-sm mt-2" style="color: #666;">Admin login required</p>
+        <p class="text-sm mt-2" style="color: var(--text-muted);">Admin login required</p>
       </div>
       <form id="login-form" onsubmit="return handleLogin(event)">
         <div class="mb-4">
-          <label class="block text-xs font-semibold mb-2 uppercase tracking-wider" style="color: #888;">Username</label>
+          <label class="block text-xs font-semibold mb-2 uppercase tracking-wider" style="color: var(--text-muted);">Username</label>
           <input type="text" id="login-user" class="login-input" placeholder="Enter username" autocomplete="username" required />
         </div>
         <div class="mb-6">
-          <label class="block text-xs font-semibold mb-2 uppercase tracking-wider" style="color: #888;">Password</label>
+          <label class="block text-xs font-semibold mb-2 uppercase tracking-wider" style="color: var(--text-muted);">Password</label>
           <input type="password" id="login-pass" class="login-input" placeholder="Enter password" autocomplete="current-password" required />
         </div>
         <p id="login-error" class="text-sm mb-4 hidden" style="color: var(--red);"></p>
-        <button type="submit" class="btn-primary w-full text-center">
-          <i class="fas fa-lock mr-2"></i> Sign In
+        <button type="submit" class="btn-primary w-full text-center" style="padding:13px;">
+          <i class="fas fa-arrow-right-to-bracket mr-2"></i> Sign In
         </button>
       </form>
       <div class="text-center mt-6">
-        <a href="index.html" class="text-xs hover:underline" style="color: #555;"><i class="fas fa-arrow-left mr-1"></i> Back to Site</a>
+        <a href="index.html" class="text-xs hover:underline transition-colors" style="color: var(--text-muted);"><i class="fas fa-arrow-left mr-1"></i> Back to Site</a>
       </div>
     </div>
   </div>
@@ -289,24 +506,25 @@
   <div id="app" class="min-h-screen">
 
     <!-- Top Bar -->
-    <header class="sticky top-0 z-50 border-b" style="background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-color: #222;">
+    <header class="sticky top-0 z-50" style="background: var(--glass); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--glass-border);">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="logo.jpg" alt="Logo" class="w-8 h-8 rounded-full object-cover" />
+          <img src="logo.jpg" alt="Logo" class="w-9 h-9 rounded-full object-cover" style="border: 2px solid var(--border);" />
           <div>
             <h2 class="text-sm font-bold" style="color: var(--text-light); font-family: 'Playfair Display', serif;">Fiestas Chicken</h2>
-            <p class="text-xs" style="color: #555;">Inventory Management</p>
+            <p class="text-xs" style="color: var(--text-muted);">Inventory Management</p>
           </div>
         </div>
-        <div class="flex items-center gap-3">
-          <button onclick="openAddModal()" class="btn-primary text-sm hidden sm:block">
+        <div class="flex items-center gap-2">
+          <button onclick="openAddModal()" class="btn-primary desktop-only">
             <i class="fas fa-plus mr-1"></i> Add Item
           </button>
-          <button onclick="openAddModal()" class="btn-primary text-sm sm:hidden" style="padding: 10px 14px;">
+          <button onclick="openAddModal()" class="btn-primary mobile-only" style="padding:10px 14px; display:none;">
             <i class="fas fa-plus"></i>
           </button>
-          <a href="index.html" class="text-xs px-3 py-2 rounded-lg border hover:border-gold transition-all" style="border-color: #333; color: #888;">
-            <i class="fas fa-external-link-alt mr-1"></i> Site
+          <div class="theme-toggle desktop-only" onclick="toggleTheme()" title="Toggle theme"></div>
+          <a href="index.html" class="text-xs px-3 py-2 rounded-lg transition-all" style="border: 1px solid var(--border); color: var(--text-muted);">
+            <i class="fas fa-external-link-alt mr-1"></i> <span class="desktop-only">Site</span>
           </a>
         </div>
       </div>
@@ -315,51 +533,80 @@
     <!-- Stats -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
       <div class="stats-grid grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="stat-card">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(200,16,46,0.15);">
+        <div class="stat-card animate-in">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(200,16,46,0.15), rgba(200,16,46,0.05));">
               <i class="fas fa-boxes-stacked" style="color: var(--red);"></i>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Total Items</span>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Total Items</span>
           </div>
-          <p class="text-2xl font-bold" style="color: var(--text-light);" id="stat-total">0</p>
+          <p class="text-3xl font-extrabold stat-value" style="color: var(--text-light);" id="stat-total">0</p>
         </div>
-        <div class="stat-card">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(212,175,55,0.15);">
+        <div class="stat-card animate-in animate-in-delay-1">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));">
               <i class="fas fa-coins" style="color: var(--gold);"></i>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Stock Value</span>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Stock Value</span>
           </div>
-          <p class="text-2xl font-bold" style="color: var(--text-light);" id="stat-value">R0</p>
+          <p class="text-3xl font-extrabold stat-value" style="color: var(--text-light);" id="stat-value">R0</p>
         </div>
-        <div class="stat-card">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(243,156,18,0.15);">
+        <div class="stat-card animate-in animate-in-delay-2">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(243,156,18,0.15), rgba(243,156,18,0.05));">
               <i class="fas fa-triangle-exclamation" style="color: var(--orange);"></i>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Low Stock</span>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Low Stock</span>
           </div>
-          <p class="text-2xl font-bold" style="color: var(--orange);" id="stat-low">0</p>
+          <p class="text-3xl font-extrabold stat-value" style="color: var(--orange);" id="stat-low">0</p>
         </div>
-        <div class="stat-card">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(200,16,46,0.15);">
+        <div class="stat-card animate-in animate-in-delay-3">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(200,16,46,0.15), rgba(200,16,46,0.05));">
               <i class="fas fa-ban" style="color: var(--red);"></i>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Out of Stock</span>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Out of Stock</span>
           </div>
-          <p class="text-2xl font-bold" style="color: var(--red);" id="stat-out">0</p>
+          <p class="text-3xl font-extrabold stat-value" style="color: var(--red);" id="stat-out">0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Charts Row -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+      <div class="charts-grid grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Stock Distribution Donut -->
+        <div class="chart-container animate-in animate-in-delay-1">
+          <h4 class="text-xs font-bold uppercase tracking-wider mb-4" style="color: var(--text-muted);">Stock Distribution</h4>
+          <div class="flex items-center gap-6">
+            <div class="donut-chart" id="donut-chart">
+              <div class="donut-center">
+                <span class="text-xl font-extrabold" style="color: var(--text-light);" id="donut-total">0</span>
+                <span class="text-xs" style="color: var(--text-muted);">items</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 text-xs">
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full" style="background: var(--green);"></span><span style="color: var(--text-body);">In Stock</span> <span class="font-bold" style="color: var(--text-light);" id="legend-instock">0</span></div>
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full" style="background: var(--orange);"></span><span style="color: var(--text-body);">Low Stock</span> <span class="font-bold" style="color: var(--text-light);" id="legend-low">0</span></div>
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full" style="background: var(--red);"></span><span style="color: var(--text-body);">Out</span> <span class="font-bold" style="color: var(--text-light);" id="legend-out">0</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Stock Bars -->
+        <div class="chart-container animate-in animate-in-delay-2 lg:col-span-2">
+          <h4 class="text-xs font-bold uppercase tracking-wider mb-4" style="color: var(--text-muted);">Stock by Category</h4>
+          <div id="category-bars" class="flex flex-col gap-3"></div>
         </div>
       </div>
     </section>
 
     <!-- Filters + Actions -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
       <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
         <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <div class="relative" style="flex:1; min-width: 200px;">
-            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2" style="color: #555;"></i>
+          <div class="search-wrap" style="flex:1; min-width: 220px;">
+            <i class="fas fa-search"></i>
             <input type="text" id="search-input" class="search-box" placeholder="Search items, SKU, category..." oninput="renderTable()" />
           </div>
           <select id="filter-category" class="form-select" style="width: auto; min-width: 150px;" onchange="renderTable()">
@@ -385,17 +632,18 @@
     </section>
 
     <!-- Table -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-10">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-6">
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
+              <th style="width:30px; cursor:grab;" title="Drag to reorder"><i class="fas fa-grip-vertical" style="opacity:0.4;"></i></th>
               <th>Item Name</th>
               <th>SKU</th>
               <th>Category</th>
               <th style="text-align:center;">Stock</th>
               <th>Price</th>
-              <th>Reorder Lvl</th>
+              <th>Reorder</th>
               <th>Status</th>
               <th style="text-align:right;">Actions</th>
             </tr>
@@ -403,41 +651,49 @@
           <tbody id="inventory-body"></tbody>
         </table>
         <div id="empty-state" class="empty-state hidden">
-          <i class="fas fa-box-open text-4xl mb-4" style="color: #333;"></i>
-          <p class="text-sm" style="color: #555;">No items found</p>
+          <i class="fas fa-box-open text-4xl mb-4" style="color: var(--border);"></i>
+          <p class="text-sm font-medium" style="color: var(--text-muted);">No items found</p>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t py-6 text-center text-xs" style="border-color: #1a1a1a; color: #444;">
+    <footer class="border-t py-6 text-center text-xs" style="border-color: var(--border); color: var(--text-muted);">
       <p>&copy; 2024 Fiestas Chicken. Inventory Management System.</p>
-      <p class="mt-1">Data stored in browser localStorage. <a href="#" onclick="exportData(); return false;" class="hover:underline" style="color: var(--gold);">Backup your data</a></p>
+      <p class="mt-1">Data stored in browser localStorage. <a href="#" onclick="exportData(); return false;" class="hover:underline font-semibold" style="color: var(--gold);">Backup your data</a></p>
     </footer>
   </div>
+
+  <!-- ==================== MOBILE BOTTOM NAV ==================== -->
+  <nav class="mobile-bottom-nav">
+    <button class="mobile-nav-btn active" onclick="mobileNav('dashboard')"><i class="fas fa-chart-pie"></i>Dashboard</button>
+    <button class="mobile-nav-btn" onclick="mobileNav('add')"><i class="fas fa-plus-circle"></i>Add Item</button>
+    <button class="mobile-nav-btn" onclick="mobileNav('export')"><i class="fas fa-file-export"></i>Export</button>
+    <button class="mobile-nav-btn" onclick="mobileNav('site')"><i class="fas fa-globe"></i>Site</button>
+  </nav>
 
   <!-- ==================== ADD/EDIT MODAL ==================== -->
   <div id="item-modal" class="modal-overlay" onclick="if(event.target===this) closeModal()">
     <div class="modal-card">
       <div class="flex items-center justify-between mb-6">
         <h3 class="text-lg font-bold" style="color: var(--text-light); font-family: 'Playfair Display', serif;" id="modal-title">Add New Item</h3>
-        <button onclick="closeModal()" class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-800 transition" style="color: #666;">
-          <i class="fas fa-times"></i>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors" style="color: var(--text-muted); background: var(--bg-surface);">
+          <i class="fas fa-times text-sm"></i>
         </button>
       </div>
       <form id="item-form" onsubmit="return saveItem(event)">
         <input type="hidden" id="edit-id" value="" />
         <div class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div class="sm:col-span-2">
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Item Name *</label>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: var(--text-muted);">Item Name *</label>
             <input type="text" id="item-name" class="form-input" placeholder="e.g. Peri-Peri Wings (6pc)" required />
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">SKU *</label>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: var(--text-muted);">SKU *</label>
             <input type="text" id="item-sku" class="form-input" placeholder="Auto-generated" />
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Category *</label>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: var(--text-muted);">Category *</label>
             <select id="item-category" class="form-select" required>
               <option value="">Select category</option>
               <option value="Burgers">Burgers</option>
@@ -456,19 +712,19 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Stock Quantity *</label>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: var(--text-muted);">Stock Quantity *</label>
             <input type="number" id="item-stock" class="form-input" min="0" placeholder="20" required />
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Price (R) *</label>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: var(--text-muted);">Price (R) *</label>
             <input type="number" id="item-price" class="form-input" min="0" step="0.01" placeholder="49.90" required />
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Reorder Level *</label>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: var(--text-muted);">Reorder Level *</label>
             <input type="number" id="item-reorder" class="form-input" min="0" placeholder="5" required />
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Sold Count</label>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: var(--text-muted);">Sold Count</label>
             <input type="number" id="item-sold" class="form-input" min="0" placeholder="0" />
           </div>
         </div>
@@ -486,14 +742,14 @@
   <div id="delete-modal" class="modal-overlay" onclick="if(event.target===this) closeDeleteModal()">
     <div class="modal-card" style="max-width: 400px;">
       <div class="text-center">
-        <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style="background: rgba(200,16,46,0.15);">
+        <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(200,16,46,0.15), rgba(200,16,46,0.05));">
           <i class="fas fa-trash-alt text-xl" style="color: var(--red);"></i>
         </div>
         <h3 class="text-lg font-bold mb-2" style="color: var(--text-light);">Delete Item?</h3>
-        <p class="text-sm mb-6" style="color: #666;" id="delete-item-name">Are you sure you want to delete this item?</p>
+        <p class="text-sm mb-6" style="color: var(--text-muted);" id="delete-item-name">Are you sure you want to delete this item?</p>
         <div class="flex gap-3 justify-center">
           <button onclick="closeDeleteModal()" class="btn-outline text-sm">Cancel</button>
-          <button onclick="confirmDelete()" class="btn-primary text-sm" style="background: var(--red);">
+          <button onclick="confirmDelete()" class="btn-primary text-sm" style="background: linear-gradient(135deg, var(--red), #a01020);">
             <i class="fas fa-trash mr-1"></i> Delete
           </button>
         </div>
@@ -510,9 +766,12 @@
     const ADMIN_USER = 'admin';
     const ADMIN_PASS = 'admin';
     const STORAGE_KEY = 'fiestas_inventory';
+    const THEME_KEY = 'fiestas_inv_theme';
     const AUTH_KEY = 'fiestas_inv_auth';
+    const ORDER_KEY = 'fiestas_inv_order';
     let loginAttempts = 0;
     let deleteTargetId = null;
+    let draggedRow = null;
 
     // ============ DEFAULT 40 MENU ITEMS ============
     const DEFAULT_ITEMS = [
@@ -558,13 +817,18 @@
       { id: 40, name: "Coleslaw — Sharing", sku: "SID-008", category: "Sides", stock: 20, price: 36.90, reorderLevel: 5, sold: 0 }
     ];
 
+    // ============ THEME ============
+    function getTheme() { return localStorage.getItem(THEME_KEY) || 'dark'; }
+    function setTheme(t) { localStorage.setItem(THEME_KEY, t); document.documentElement.setAttribute('data-theme', t); }
+    function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+    document.documentElement.setAttribute('data-theme', getTheme());
+
     // ============ AUTH ============
     function handleLogin(e) {
       e.preventDefault();
       const user = document.getElementById('login-user').value.trim();
       const pass = document.getElementById('login-pass').value;
       const errEl = document.getElementById('login-error');
-
       if (user === ADMIN_USER && pass === ADMIN_PASS) {
         sessionStorage.setItem(AUTH_KEY, '1');
         document.getElementById('login-screen').style.display = 'none';
@@ -588,28 +852,18 @@
     // ============ STORAGE ============
     function getItems() {
       const data = localStorage.getItem(STORAGE_KEY);
-      if (!data) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ITEMS));
-        return [...DEFAULT_ITEMS];
-      }
+      if (!data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ITEMS)); return [...DEFAULT_ITEMS]; }
       return JSON.parse(data);
     }
-
-    function saveItems(items) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    function getOrder() {
+      const data = localStorage.getItem(ORDER_KEY);
+      return data ? JSON.parse(data) : null;
     }
-
-    function getNextId() {
-      const items = getItems();
-      return items.length > 0 ? Math.max(...items.map(i => i.id)) + 1 : 1;
-    }
-
+    function saveItems(items) { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); }
+    function saveOrder(order) { localStorage.setItem(ORDER_KEY, JSON.stringify(order)); }
+    function getNextId() { const items = getItems(); return items.length > 0 ? Math.max(...items.map(i => i.id)) + 1 : 1; }
     function generateSKU(category) {
-      const prefix = {
-        'Burgers': 'BUR', 'Grills': 'GRL', 'Peri': 'PER', 'Starters': 'STR',
-        'Desserts': 'DES', 'Drinks': 'DRK', 'Feasts': 'FST', 'Shawarmas': 'SHW',
-        'Thumbs Up': 'THU', 'Loaded Fries': 'LFR', 'Strips': 'STP', 'Salads': 'SAL', 'Sides': 'SID'
-      }[category] || 'ITM';
+      const prefix = { 'Burgers':'BUR','Grills':'GRL','Peri':'PER','Starters':'STR','Desserts':'DES','Drinks':'DRK','Feasts':'FST','Shawarmas':'SHW','Thumbs Up':'THU','Loaded Fries':'LFR','Strips':'STP','Salads':'SAL','Sides':'SID' }[category] || 'ITM';
       const items = getItems();
       const count = items.filter(i => i.sku && i.sku.startsWith(prefix)).length;
       return `${prefix}-${String(count + 1).padStart(3, '0')}`;
@@ -621,13 +875,10 @@
       if (item.stock <= item.reorderLevel) return 'lowstock';
       return 'instock';
     }
-
     function getStatusLabel(status) {
-      switch (status) {
-        case 'outofstock': return '<span class="badge badge-outofstock">Out of Stock</span>';
-        case 'lowstock': return '<span class="badge badge-lowstock">Low Stock</span>';
-        default: return '<span class="badge badge-instock">In Stock</span>';
-      }
+      const icons = { outofstock:'fa-ban', lowstock:'fa-fire', instock:'fa-check-circle' };
+      const labels = { outofstock:'Out of Stock', lowstock:'Low Stock', instock:'In Stock' };
+      return `<span class="badge badge-${status}"><i class="fas ${icons[status]}" style="font-size:9px;"></i>${labels[status]}</span>`;
     }
 
     function renderStats() {
@@ -636,11 +887,30 @@
       const value = items.reduce((sum, i) => sum + (i.stock * i.price), 0);
       const low = items.filter(i => i.stock > 0 && i.stock <= i.reorderLevel).length;
       const out = items.filter(i => i.stock <= 0).length;
-
+      const instock = total - low - out;
       document.getElementById('stat-total').textContent = total;
       document.getElementById('stat-value').textContent = 'R' + value.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       document.getElementById('stat-low').textContent = low;
       document.getElementById('stat-out').textContent = out;
+      // Donut
+      document.getElementById('donut-total').textContent = total;
+      document.getElementById('legend-instock').textContent = instock;
+      document.getElementById('legend-low').textContent = low;
+      document.getElementById('legend-out').textContent = out;
+      const pctIn = total ? (instock/total)*100 : 0;
+      const pctLow = total ? (low/total)*100 : 0;
+      const pctOut = total ? (out/total)*100 : 0;
+      document.getElementById('donut-chart').style.background = `conic-gradient(var(--green) 0% ${pctIn}%, var(--orange) ${pctIn}% ${pctIn+pctLow}%, var(--red) ${pctIn+pctLow}% 100%)`;
+      // Category bars
+      const cats = {};
+      items.forEach(i => { if (!cats[i.category]) cats[i.category] = { total:0, stock:0 }; cats[i.category].total++; cats[i.category].stock += i.stock; });
+      const maxStock = Math.max(...Object.values(cats).map(c => c.stock), 1);
+      const barsHtml = Object.entries(cats).sort((a,b) => b[1].stock - a[1].stock).map(([cat, data]) => {
+        const pct = (data.stock / maxStock) * 100;
+        const color = data.stock === 0 ? 'var(--red)' : data.stock <= data.total * 5 ? 'var(--orange)' : 'var(--green)';
+        return `<div class="flex items-center gap-3"><span class="text-xs font-semibold w-24 truncate" style="color: var(--text-body);">${cat}</span><div class="chart-bar flex-1"><div class="chart-bar-fill" style="width:${pct}%; background:${color};"></div></div><span class="text-xs font-bold w-10 text-right" style="color: var(--text-light);">${data.stock}</span></div>`;
+      }).join('');
+      document.getElementById('category-bars').innerHTML = barsHtml;
     }
 
     function renderCategories() {
@@ -649,98 +919,107 @@
       const sel = document.getElementById('filter-category');
       const current = sel.value;
       sel.innerHTML = '<option value="">All Categories</option>';
-      cats.forEach(c => {
-        sel.innerHTML += `<option value="${c}" ${current === c ? 'selected' : ''}>${c}</option>`;
-      });
+      cats.forEach(c => { sel.innerHTML += `<option value="${c}" ${current === c ? 'selected' : ''}>${c}</option>`; });
     }
 
     function renderTable() {
-      const items = getItems();
+      let items = getItems();
+      const order = getOrder();
+      if (order) {
+        items.sort((a, b) => {
+          const ai = order.indexOf(a.id);
+          const bi = order.indexOf(b.id);
+          return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+        });
+      }
       const search = document.getElementById('search-input').value.toLowerCase();
       const catFilter = document.getElementById('filter-category').value;
       const statusFilter = document.getElementById('filter-status').value;
-
       let filtered = items.filter(item => {
-        const matchSearch = !search ||
-          item.name.toLowerCase().includes(search) ||
-          item.sku.toLowerCase().includes(search) ||
-          item.category.toLowerCase().includes(search);
+        const matchSearch = !search || item.name.toLowerCase().includes(search) || item.sku.toLowerCase().includes(search) || item.category.toLowerCase().includes(search);
         const matchCat = !catFilter || item.category === catFilter;
         const status = getStatus(item);
         const matchStatus = !statusFilter || status === statusFilter;
         return matchSearch && matchCat && matchStatus;
       });
-
       const tbody = document.getElementById('inventory-body');
       const empty = document.getElementById('empty-state');
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = '';
-        empty.classList.remove('hidden');
-        return;
-      }
-
+      if (filtered.length === 0) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
       empty.classList.add('hidden');
-      tbody.innerHTML = filtered.map(item => {
+      tbody.innerHTML = filtered.map((item, idx) => {
         const status = getStatus(item);
         const rowClass = status === 'outofstock' ? 'row-outofstock' : status === 'lowstock' ? 'row-lowstock' : '';
-        return `
-          <tr class="${rowClass}">
-            <td>
-              <span class="font-medium" style="color: var(--text-light);">${item.name}</span>
-              ${item.sold > 0 ? `<br><span class="text-xs" style="color: #555;"><i class="fas fa-shopping-cart mr-1" style="font-size:10px;"></i>${item.sold} sold</span>` : ''}
-            </td>
-            <td><code style="color: var(--gold); font-size: 12px;">${item.sku}</code></td>
-            <td><span class="text-xs px-2 py-1 rounded-md" style="background: #1a1a1a; color: #888;">${item.category}</span></td>
-            <td style="text-align:center;">
-              <span class="font-bold text-lg ${status === 'outofstock' ? 'style="color:var(--red);"' : status === 'lowstock' ? 'style="color:var(--orange);"' : ''}" style="${status === 'outofstock' ? 'color:var(--red);' : status === 'lowstock' ? 'color:var(--orange);' : 'color:var(--text-light);'}">${item.stock}</span>
-            </td>
-            <td style="color: var(--gold);">R${item.price.toFixed(2)}</td>
-            <td style="color: #666;">${item.reorderLevel}</td>
-            <td>${getStatusLabel(status)}</td>
-            <td style="text-align:right;">
-              <div class="flex gap-1 justify-end flex-wrap">
-                <button onclick="stockIn(${item.id})" class="btn-sm btn-stock-in" title="Stock In +1"><i class="fas fa-plus"></i></button>
-                <button onclick="stockOut(${item.id})" class="btn-sm btn-stock-out" title="Stock Out -1"><i class="fas fa-minus"></i></button>
-                <button onclick="editItem(${item.id})" class="btn-sm btn-edit" title="Edit"><i class="fas fa-pen"></i></button>
-                <button onclick="openDeleteModal(${item.id})" class="btn-sm btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
-              </div>
-            </td>
-          </tr>
-        `;
+        const stockColor = status === 'outofstock' ? 'var(--red)' : status === 'lowstock' ? 'var(--orange)' : 'var(--text-light)';
+        return `<tr class="${rowClass}" draggable="true" data-id="${item.id}" style="animation: slideInRight 0.3s ease both; animation-delay: ${idx * 0.02}s;">
+          <td style="cursor:grab; color: var(--text-muted);"><i class="fas fa-grip-vertical" style="font-size:11px;"></i></td>
+          <td>
+            <span class="font-semibold" style="color: var(--text-light);">${item.name}</span>
+            ${item.sold > 0 ? `<br><span class="text-xs" style="color: var(--text-muted);"><i class="fas fa-shopping-cart mr-1" style="font-size:9px;"></i>${item.sold} sold</span>` : ''}
+          </td>
+          <td><code style="color: var(--gold); font-size: 11px; background: var(--bg-surface); padding: 2px 6px; border-radius: 4px;">${item.sku}</code></td>
+          <td><span class="text-xs px-2 py-1 rounded-lg font-medium" style="background: var(--bg-surface); color: var(--text-body);">${item.category}</span></td>
+          <td style="text-align:center;"><span class="font-extrabold text-lg" style="color: ${stockColor};">${item.stock}</span></td>
+          <td><span class="font-bold" style="color: var(--gold);">R${item.price.toFixed(2)}</span></td>
+          <td style="color: var(--text-muted);">${item.reorderLevel}</td>
+          <td>${getStatusLabel(status)}</td>
+          <td style="text-align:right;">
+            <div class="flex gap-1 justify-end flex-wrap">
+              <button onclick="stockIn(${item.id})" class="btn-sm btn-stock-in" title="Stock In +1"><i class="fas fa-plus"></i></button>
+              <button onclick="stockOut(${item.id})" class="btn-sm btn-stock-out" title="Stock Out -1"><i class="fas fa-minus"></i></button>
+              <button onclick="editItem(${item.id})" class="btn-sm btn-edit" title="Edit"><i class="fas fa-pen"></i></button>
+              <button onclick="openDeleteModal(${item.id})" class="btn-sm btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>`;
       }).join('');
+      initDragDrop();
+    }
+
+    // ============ DRAG & DROP ============
+    function initDragDrop() {
+      const tbody = document.getElementById('inventory-body');
+      tbody.querySelectorAll('tr').forEach(row => {
+        row.addEventListener('dragstart', e => { draggedRow = row; row.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+        row.addEventListener('dragend', () => { row.classList.remove('dragging'); draggedRow = null; tbody.querySelectorAll('tr').forEach(r => r.classList.remove('drag-over')); });
+        row.addEventListener('dragover', e => { e.preventDefault(); if (row !== draggedRow) { tbody.querySelectorAll('tr').forEach(r => r.classList.remove('drag-over')); row.classList.add('drag-over'); } });
+        row.addEventListener('drop', e => {
+          e.preventDefault();
+          if (draggedRow && draggedRow !== row) {
+            const items = getItems();
+            const fromId = parseInt(draggedRow.dataset.id);
+            const toId = parseInt(row.dataset.id);
+            const fromIdx = items.findIndex(i => i.id === fromId);
+            const toIdx = items.findIndex(i => i.id === toId);
+            if (fromIdx !== -1 && toIdx !== -1) {
+              const [moved] = items.splice(fromIdx, 1);
+              items.splice(toIdx, 0, moved);
+              saveItems(items);
+              const newOrder = items.map(i => i.id);
+              saveOrder(newOrder);
+              renderTable();
+              showToast('Row reordered', 'success');
+            }
+          }
+        });
+      });
     }
 
     // ============ STOCK ACTIONS ============
     function stockIn(id) {
-      const items = getItems();
-      const idx = items.findIndex(i => i.id === id);
+      const items = getItems(); const idx = items.findIndex(i => i.id === id);
       if (idx === -1) return;
-      items[idx].stock++;
-      saveItems(items);
-      renderAll();
+      items[idx].stock++; saveItems(items); renderAll();
       showToast(`+1 added to ${items[idx].name}`, 'success');
     }
-
     function stockOut(id) {
-      const items = getItems();
-      const idx = items.findIndex(i => i.id === id);
+      const items = getItems(); const idx = items.findIndex(i => i.id === id);
       if (idx === -1) return;
-      if (items[idx].stock <= 0) {
-        showToast(`${items[idx].name} is already out of stock!`, 'error');
-        return;
-      }
-      items[idx].stock--;
-      items[idx].sold = (items[idx].sold || 0) + 1;
-      saveItems(items);
-      renderAll();
-      if (items[idx].stock <= items[idx].reorderLevel && items[idx].stock > 0) {
-        showToast(`Low stock alert: ${items[idx].name} (${items[idx].stock} left)`, 'warning');
-      } else if (items[idx].stock === 0) {
-        showToast(`Out of stock: ${items[idx].name}`, 'error');
-      } else {
-        showToast(`-1 removed from ${items[idx].name}`, 'success');
-      }
+      if (items[idx].stock <= 0) { showToast(`${items[idx].name} is already out of stock!`, 'error'); return; }
+      items[idx].stock--; items[idx].sold = (items[idx].sold || 0) + 1;
+      saveItems(items); renderAll();
+      if (items[idx].stock <= items[idx].reorderLevel && items[idx].stock > 0) showToast(`Low stock alert: ${items[idx].name} (${items[idx].stock} left)`, 'warning');
+      else if (items[idx].stock === 0) showToast(`Out of stock: ${items[idx].name}`, 'error');
+      else showToast(`-1 removed from ${items[idx].name}`, 'success');
     }
 
     // ============ MODALS ============
@@ -758,10 +1037,8 @@
       document.getElementById('item-sku').placeholder = 'Auto-generated';
       document.getElementById('item-modal').classList.add('active');
     }
-
     function editItem(id) {
-      const items = getItems();
-      const item = items.find(i => i.id === id);
+      const items = getItems(); const item = items.find(i => i.id === id);
       if (!item) return;
       document.getElementById('modal-title').textContent = 'Edit Item';
       document.getElementById('modal-save-btn').innerHTML = '<i class="fas fa-save mr-1"></i> Update Item';
@@ -776,11 +1053,7 @@
       document.getElementById('item-sku').placeholder = '';
       document.getElementById('item-modal').classList.add('active');
     }
-
-    function closeModal() {
-      document.getElementById('item-modal').classList.remove('active');
-    }
-
+    function closeModal() { document.getElementById('item-modal').classList.remove('active'); }
     function saveItem(e) {
       e.preventDefault();
       const editId = document.getElementById('edit-id').value;
@@ -791,91 +1064,46 @@
       const price = parseFloat(document.getElementById('item-price').value) || 0;
       const reorderLevel = parseInt(document.getElementById('item-reorder').value) || 5;
       const sold = parseInt(document.getElementById('item-sold').value) || 0;
-
-      if (!name || !category) {
-        showToast('Please fill in all required fields', 'error');
-        return false;
-      }
-
+      if (!name || !category) { showToast('Please fill in all required fields', 'error'); return false; }
       const items = getItems();
-
       if (editId) {
         const idx = items.findIndex(i => i.id === parseInt(editId));
-        if (idx !== -1) {
-          items[idx].name = name;
-          items[idx].sku = sku || items[idx].sku;
-          items[idx].category = category;
-          items[idx].stock = stock;
-          items[idx].price = price;
-          items[idx].reorderLevel = reorderLevel;
-          items[idx].sold = sold;
-        }
+        if (idx !== -1) { items[idx].name = name; items[idx].sku = sku || items[idx].sku; items[idx].category = category; items[idx].stock = stock; items[idx].price = price; items[idx].reorderLevel = reorderLevel; items[idx].sold = sold; }
         showToast(`${name} updated successfully`, 'success');
       } else {
-        const newItem = {
-          id: getNextId(),
-          name,
-          sku: sku || generateSKU(category),
-          category,
-          stock,
-          price,
-          reorderLevel,
-          sold
-        };
-        items.push(newItem);
+        items.push({ id: getNextId(), name, sku: sku || generateSKU(category), category, stock, price, reorderLevel, sold });
         showToast(`${name} added to inventory`, 'success');
       }
-
-      saveItems(items);
-      closeModal();
-      renderAll();
-      return false;
+      saveItems(items); closeModal(); renderAll(); return false;
     }
-
     function openDeleteModal(id) {
-      const items = getItems();
-      const item = items.find(i => i.id === id);
+      const items = getItems(); const item = items.find(i => i.id === id);
       if (!item) return;
       deleteTargetId = id;
       document.getElementById('delete-item-name').textContent = `Delete "${item.name}" from inventory?`;
       document.getElementById('delete-modal').classList.add('active');
     }
-
-    function closeDeleteModal() {
-      document.getElementById('delete-modal').classList.remove('active');
-      deleteTargetId = null;
-    }
-
+    function closeDeleteModal() { document.getElementById('delete-modal').classList.remove('active'); deleteTargetId = null; }
     function confirmDelete() {
       if (deleteTargetId === null) return;
-      let items = getItems();
-      const item = items.find(i => i.id === deleteTargetId);
+      let items = getItems(); const item = items.find(i => i.id === deleteTargetId);
       items = items.filter(i => i.id !== deleteTargetId);
-      saveItems(items);
-      closeDeleteModal();
-      renderAll();
+      saveItems(items); closeDeleteModal(); renderAll();
       showToast(`${item ? item.name : 'Item'} deleted`, 'success');
     }
 
     // ============ EXPORT / IMPORT ============
     function exportData() {
       const items = getItems();
-      const dataStr = JSON.stringify(items, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
+      const a = document.createElement('a'); a.href = url;
       a.download = `fiestas-inventory-${new Date().toISOString().slice(0, 10)}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      showToast(`Exported ${items.length} items`, 'success');
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url); showToast(`Exported ${items.length} items`, 'success');
     }
-
     function importData(e) {
-      const file = e.target.files[0];
-      if (!file) return;
+      const file = e.target.files[0]; if (!file) return;
       const reader = new FileReader();
       reader.onload = function(ev) {
         try {
@@ -883,39 +1111,34 @@
           if (!Array.isArray(imported)) throw new Error('Invalid format');
           const valid = imported.filter(i => i.name && typeof i.stock === 'number');
           if (valid.length === 0) throw new Error('No valid items found');
-          saveItems(valid);
-          renderAll();
-          showToast(`Imported ${valid.length} items successfully`, 'success');
-        } catch (err) {
-          showToast('Invalid file format. Please use a valid JSON backup.', 'error');
-        }
+          saveItems(valid); renderAll(); showToast(`Imported ${valid.length} items successfully`, 'success');
+        } catch (err) { showToast('Invalid file format. Please use a valid JSON backup.', 'error'); }
       };
-      reader.readAsText(file);
-      e.target.value = '';
+      reader.readAsText(file); e.target.value = '';
     }
 
     // ============ TOAST ============
     function showToast(msg, type) {
       const t = document.getElementById('toast');
-      t.textContent = msg;
+      const icons = { success:'fa-check-circle', error:'fa-times-circle', warning:'fa-exclamation-triangle' };
+      t.innerHTML = `<i class="fas ${icons[type] || 'fa-info-circle'}"></i> ${msg}`;
       t.className = `toast toast-${type} show`;
       clearTimeout(t._timeout);
       t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
     }
 
+    // ============ MOBILE NAV ============
+    function mobileNav(action) {
+      if (action === 'add') openAddModal();
+      else if (action === 'export') exportData();
+      else if (action === 'site') window.location.href = 'index.html';
+      document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
     // ============ INIT ============
-    function renderAll() {
-      renderStats();
-      renderCategories();
-      renderTable();
-    }
-
-    function init() {
-      getItems();
-      renderAll();
-    }
-
-    // Check auth on load
+    function renderAll() { renderStats(); renderCategories(); renderTable(); }
+    function init() { getItems(); renderAll(); }
     if (sessionStorage.getItem(AUTH_KEY) === '1') {
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').classList.add('active');
