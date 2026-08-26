@@ -13,7 +13,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="restaurant" />
   <meta property="og:title" content="Fiestas Chicken – Authentic Charcoal Peri-Peri Chicken" />
-  <meta property="og:description" content="Fire-kissed, boldly spiced charcoal-grilled peri-peri chicken in Johannesburg. Order online for delivery or pickup." />
+  <meta property="og:description" content="Charcoal-grilled peri-peri chicken in Johannesburg. Flame-grilled burgers, family combos, braai boxes. Order online." />
   <meta property="og:image" content="https://chicken-fiestas.malikstopher.workers.dev/logo.jpg" />
   <meta property="og:url" content="https://chicken-fiestas.malikstopher.workers.dev/" />
   <meta property="og:site_name" content="Fiestas Chicken" />
@@ -22,14 +22,14 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Fiestas Chicken – Authentic Charcoal Peri-Peri Chicken" />
-  <meta name="twitter:description" content="Fire-kissed, boldly spiced charcoal-grilled peri-peri chicken in Johannesburg." />
+  <meta name="twitter:description" content="Charcoal-grilled peri-peri chicken in Johannesburg." />
   <meta name="twitter:image" content="https://chicken-fiestas.malikstopher.workers.dev/logo.jpg" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="preload" as="video" href="video/hero-desktop-opt.mp4" media="(min-width: 769px)" fetchpriority="high">
   <link rel="preload" as="video" href="video/mobile-hero-opt-fast.mp4" media="(max-width: 768px)" fetchpriority="high">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -105,12 +105,12 @@
       --text-light: #E5E5E5;
     }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
       background: var(--bg-dark);
       color: var(--text-body);
       overflow-x: hidden;
     }
-    h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--text-light); }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Cormorant', serif; color: var(--text-light); }
 
     .text-gold { color: var(--gold); }
     .text-red { color: var(--red); }
@@ -120,36 +120,98 @@
     .border-red { border-color: var(--red); }
 
     .btn-primary {
+      position: relative;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
       color: white;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
       box-shadow: 0 4px 20px rgba(200,16,46,0.3);
+      cursor: pointer;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-primary:hover::before {
+      left: 100%;
     }
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(200,16,46,0.5);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(200,16,46,0.5), 0 0 40px rgba(200,16,46,0.2);
+    }
+    .btn-primary:active {
+      transform: translateY(-1px) scale(0.98);
+      transition-duration: 0.1s;
     }
     .btn-gold {
+      position: relative;
       background: linear-gradient(135deg, var(--gold), #B8962E);
       color: #0A0A0A;
       font-weight: 600;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
       box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+      cursor: pointer;
+    }
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-gold:hover::before {
+      left: 100%;
     }
     .btn-gold:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(212,175,55,0.5);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(212,175,55,0.5), 0 0 40px rgba(212,175,55,0.2);
+    }
+    .btn-gold:active {
+      transform: translateY(-1px) scale(0.98);
+      transition-duration: 0.1s;
     }
     .btn-outline {
-      border: 2px solid var(--gold);
+      position: relative;
+      border: 1.5px solid var(--gold);
       color: var(--gold);
       background: transparent;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+    }
+    .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.15), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-outline:hover::before {
+      left: 100%;
     }
     .btn-outline:hover {
-      background: var(--gold);
-      color: #0A0A0A;
-      transform: translateY(-2px);
+      background: rgba(212,175,55,0.08);
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+      box-shadow: 0 0 30px rgba(212,175,55,0.2), 0 0 60px rgba(212,175,55,0.1), inset 0 0 30px rgba(212,175,55,0.05);
+      transform: translateY(-3px) scale(1.02);
+    }
+    .btn-outline:active {
+      transform: translateY(-1px) scale(0.98);
+      transition-duration: 0.1s;
     }
 
     .glow-red { box-shadow: 0 0 30px rgba(200,16,46,0.15); }
@@ -420,13 +482,14 @@
     .remove-btn:hover { color: var(--red); }
 
     .section-title {
-      font-size: 2.75rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
+      font-family: 'Cormorant', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
     }
     .section-subtitle {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1rem;
       font-weight: 400;
       color: var(--text-body);
@@ -585,7 +648,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
         </svg>
         <p class="text-sm">Your cart is empty</p>
-        <p class="text-xs text-gray-700 mt-1">Add some fiery goodness!</p>
+            <p class="text-xs text-gray-700 mt-1">Add something to get started.</p>
       </div>
     </div>
     <div class="p-5 border-t border-white/5">
@@ -613,7 +676,7 @@
       <div class="flex items-center justify-between h-16 lg:h-20">
         <a href="#" class="flex items-center gap-3">
           <img src="logo.jpg" alt="Fiestas Chicken Logo" class="w-10 h-10 rounded-full object-cover" />
-          <span class="text-white font-serif text-xl font-bold tracking-tight hidden sm:block" style="font-family:'Playfair Display',serif;">
+          <span class="text-white text-xl font-bold tracking-tight hidden sm:block" style="font-family:'Cormorant',serif;">
             FIESTAS<span class="text-gold">.</span>
           </span>
         </a>
@@ -677,10 +740,10 @@
     <div class="hero-content text-center px-4 sm:px-6 max-w-5xl mx-auto">
       <!-- CTA Buttons -->
       <div class="hidden lg:flex items-center justify-center gap-6">
-          <a href="#menu" class="btn-outline text-white px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3">
+          <a href="#menu" class="btn-outline text-white px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3 magnetic-btn">
             <i class="fas fa-fire"></i> Explore Menu
           </a>
-        <a href="#contact" class="btn-outline px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3">
+        <a href="#contact" class="btn-outline px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3 magnetic-btn">
           <i class="fas fa-truck"></i> Order Online
         </a>
       </div>
@@ -697,13 +760,13 @@
           <h2 class="section-title text-white mt-4">Where the Fire<br/>Meets the <span class="text-white">Flavor</span></h2>
           <div class="space-y-5 mt-8 text-gray-400 leading-relaxed">
             <p>
-              Fiestas Chicken was born from a simple belief: the best chicken is cooked over real charcoal, kissed by open flame, and marinated in the boldest peri-peri this side of the equator.
+              We cook over real charcoal. Open flame, peri-peri marinade, chicken grilled fresh every time you order.
             </p>
             <p>
-              Every bird is flame-grilled to order — crisp, smoky, and juicy. Our peri-peri is crafted in-house using African bird's eye chilies, garlic, and a secret blend of spices passed down through generations.
+              Our peri-peri uses African bird's eye chilies, garlic, and a spice blend we mix in-house. Every quarter, every wing, every rib goes over the coals.
             </p>
             <p class="text-gold font-medium">
-              No gas. No shortcuts. Just fire, flavor, and a whole lot of soul.
+              Charcoal only. Nothing else.
             </p>
           </div>
         </div>
@@ -764,7 +827,7 @@
         <span class="section-subtitle text-gold">Feast & Combos</span>
         <div class="flex justify-center"><span class="gold-accent"></span></div>
         <h2 class="section-title text-white mt-4">Share the <span class="text-white">Fire</span></h2>
-        <p class="text-gray-500 mt-4 max-w-xl mx-auto">Our legendary sharing platters — built for tables full of hungry souls.</p>
+        <p class="text-gray-500 mt-4 max-w-xl mx-auto">Sharing platters built for the table.</p>
       </div>
 
       <div class="grid lg:grid-cols-3 gap-8 mt-14">
@@ -775,7 +838,7 @@
             <img src="Family Feast.jpg" alt="Family Feast" class="w-full h-full object-cover" />
           </div>
           <div class="p-6 lg:p-8">
-            <h3 class="text-2xl font-bold text-white font-serif">Family Feast</h3>
+            <h3 class="text-2xl font-bold text-white" style="font-family:'Cormorant',serif;">Family Feast</h3>
             <p class="text-sm text-gray-500 mt-1">Whole grilled chicken | 6 peri-peri wings | 4 large sides | 2L coke | Garlic bread</p>
             <div class="flex items-center justify-between mt-6">
               <span class="text-2xl font-bold text-gold">R349</span>
@@ -791,7 +854,7 @@
             <img src="Ultimate Braai Box.jpg" alt="Ultimate Braai Box" class="w-full h-full object-cover" />
           </div>
           <div class="p-6 lg:p-8">
-            <h3 class="text-2xl font-bold text-white font-serif">Ultimate Braai Box</h3>
+            <h3 class="text-2xl font-bold text-white" style="font-family:'Cormorant',serif;">Ultimate Braai Box</h3>
             <p class="text-sm text-gray-500 mt-1">2 x quarter chicken | 8 ribs | 6 wings | 3 sides | 2L coke | Rolls</p>
             <div class="flex items-center justify-between mt-6">
               <span class="text-2xl font-bold text-gold">R449</span>
@@ -807,7 +870,7 @@
             <img src="Date Night Duo.jpg" alt="Date Night Duo" class="w-full h-full object-cover" />
           </div>
           <div class="p-6 lg:p-8">
-            <h3 class="text-2xl font-bold text-white font-serif">Date Night Duo</h3>
+            <h3 class="text-2xl font-bold text-white" style="font-family:'Cormorant',serif;">Date Night Duo</h3>
             <p class="text-sm text-gray-500 mt-1">2 x flame-grilled fillets | 2 sides | 2 drinks | Shared dessert</p>
             <div class="flex items-center justify-between mt-6">
               <span class="text-2xl font-bold text-gold">R249</span>
@@ -827,7 +890,7 @@
         <span class="section-subtitle text-gold">Live Fire Experience</span>
         <div class="flex justify-center"><span class="gold-accent"></span></div>
         <h2 class="section-title text-white mt-4">The Art of <span class="text-white">Charcoal Braai</span></h2>
-        <p class="text-gray-500 mt-4 max-w-xl mx-auto">Every meal at Fiestas is a performance — flames, smoke, and the sizzle of perfection.</p>
+        <p class="text-gray-500 mt-4 max-w-xl mx-auto">Flames, smoke, and chicken on the coals. Every day.</p>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-14">
@@ -857,7 +920,7 @@
         <span class="section-subtitle text-gold">Order & Delivery</span>
         <div class="flex justify-center"><span class="gold-accent"></span></div>
         <h2 class="section-title text-white mt-4">Get Your <span class="text-white">Fire</span><br/>Wherever You Are</h2>
-        <p class="text-gray-500 mt-4 max-w-lg mx-auto">Order online for pickup or delivery. The flame follows.</p>
+        <p class="text-gray-500 mt-4 max-w-lg mx-auto">Order online for pickup or delivery.</p>
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 reveal">
@@ -898,9 +961,9 @@
         <div class="sm:col-span-2 lg:col-span-1">
           <a href="#" class="flex items-center gap-3 mb-4">
             <img src="logo.jpg" alt="Fiestas Chicken Logo" class="w-10 h-10 rounded-full object-cover" />
-            <span class="font-bold text-lg font-serif" style="color: #f5f5f5;">Fiestas Chicken</span>
+            <span class="font-bold text-lg" style="color: #f5f5f5; font-family:'Cormorant',serif;">Fiestas Chicken</span>
           </a>
-          <p class="text-sm leading-relaxed mb-6" style="color: #bbb;">Authentic charcoal-grilled chicken in the heart of Johannesburg. Fire. Flavour. Family.</p>
+          <p class="text-sm leading-relaxed mb-6" style="color: #bbb;">Charcoal-grilled peri-peri chicken in Johannesburg.</p>
           <div class="flex gap-3">
             <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><i class="fab fa-instagram"></i></a>
             <a href="https://www.facebook.com/profile.php?id=61591916552288" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><i class="fab fa-facebook-f"></i></a>
@@ -1064,7 +1127,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
             </svg>
             <p class="text-sm">Your cart is empty</p>
-            <p class="text-xs text-gray-700 mt-1">Add some fiery goodness!</p>
+        <p class="text-xs text-gray-700 mt-1">Add something to get started.</p>
           </div>
         `;
         return;
@@ -1165,7 +1228,7 @@
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
           <div class="p-5">
-            <h3 class="text-lg font-bold text-white font-serif">${item.name}</h3>
+            <h3 class="text-lg font-bold text-white" style="font-family:'Cormorant',serif;">${item.name}</h3>
             <p class="text-sm text-gray-500 mt-1.5 leading-relaxed">${item.desc}</p>
             <div class="flex items-center justify-between mt-5">
               <div>
@@ -1288,16 +1351,7 @@
       });
     });
 
-    // Reveal on Scroll
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // Reveal on Scroll (handled by premium animation system above)
 
     // Ember Particle Effect
     const canvas = document.getElementById('particle-canvas');
@@ -1564,6 +1618,74 @@
     // Init
     renderMenu('all');
     updateCart();
+
+    // ============ MAGNETIC CURSOR EFFECT ============
+    const magneticBtns = document.querySelectorAll('.magnetic-btn');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+      magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scale(1.02)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0, 0) scale(1)';
+          btn.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+        });
+        btn.addEventListener('mouseenter', () => {
+          btn.style.transition = 'transform 0.15s ease-out';
+        });
+      });
+    }
+
+    // ============ SCROLL REVEAL ANIMATIONS ============
+    if (!prefersReducedMotion) {
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      revealElements.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1) ${i * 0.05}s, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1) ${i * 0.05}s`;
+        revealObserver.observe(el);
+      });
+    }
+
+    // ============ PREMIUM BUTTON RIPPLE ============
+    document.querySelectorAll('.btn-primary, .btn-gold, .btn-outline').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.style.cssText = `
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.3);
+          width: 0;
+          height: 0;
+          left: ${e.clientX - rect.left}px;
+          top: ${e.clientY - rect.top}px;
+          transform: translate(-50%, -50%);
+          pointer-events: none;
+        `;
+        this.appendChild(ripple);
+        const size = Math.max(rect.width, rect.height) * 2;
+        ripple.animate([
+          { width: '0px', height: '0px', opacity: 0.6 },
+          { width: size + 'px', height: size + 'px', opacity: 0 }
+        ], { duration: 600, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
   </script>
 
   <!-- Site Toast -->
