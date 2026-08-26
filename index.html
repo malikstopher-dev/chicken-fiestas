@@ -181,6 +181,7 @@
       border-radius: 1rem;
       overflow: hidden;
       transition: all 0.4s ease;
+      position: relative;
     }
     .menu-card:hover {
       border-color: var(--gold);
@@ -189,6 +190,90 @@
     }
     .menu-card img { transition: transform 0.6s ease; }
     .menu-card:hover img { transform: scale(1.08); }
+    .menu-card.out-of-stock img { filter: grayscale(70%) brightness(0.5); }
+    .menu-card.out-of-stock:hover { border-color: #333; transform: none; box-shadow: none; cursor: default; }
+
+    .stock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .stock-badge-out {
+      background: rgba(200,16,46,0.9);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.4rem 1.2rem;
+      border-radius: 9999px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 20px rgba(200,16,46,0.5);
+    }
+    .stock-badge-low {
+      background: rgba(243,156,18,0.9);
+      color: #0A0A0A;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 5;
+      box-shadow: 0 4px 15px rgba(243,156,18,0.4);
+    }
+    .low-stock-text {
+      color: #f39c12;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .btn-sold-out {
+      background: #333 !important;
+      color: #666 !important;
+      cursor: not-allowed !important;
+      box-shadow: none !important;
+      pointer-events: none;
+    }
+    .combo-card.out-of-stock { opacity: 0.7; }
+    .combo-card.out-of-stock:hover { transform: none; box-shadow: none; }
+    .combo-card.out-of-stock .combo-stock-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      border-radius: 1.25rem;
+    }
+
+    .site-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #E5E5E5;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 9999;
+      opacity: 0;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      pointer-events: none;
+    }
+    .site-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .site-toast i { margin-right: 8px; }
 
     .combo-card {
       background: var(--bg-card);
@@ -919,6 +1004,43 @@
       { id: 40, name: "Coleslaw — Sharing", desc: "Generous portion of creamy coleslaw for sharing.", price: 36.90, image: "Sharing Coleslaw.png", category: "sides" }
     ];
 
+    // ============ INVENTORY STOCK SYNC ============
+    const INV_STORAGE_KEY = 'fiestas_inventory';
+
+    function getInventoryStock() {
+      try {
+        const data = localStorage.getItem(INV_STORAGE_KEY);
+        if (!data) return null;
+        const items = JSON.parse(data);
+        const stockMap = {};
+        items.forEach(item => {
+          stockMap[item.name] = { stock: item.stock, reorderLevel: item.reorderLevel, sold: item.sold || 0 };
+        });
+        return stockMap;
+      } catch (e) { return null; }
+    }
+
+    function getItemStock(name) {
+      const stockMap = getInventoryStock();
+      if (!stockMap || !stockMap[name]) return null;
+      return stockMap[name];
+    }
+
+    function showSiteToast(msg) {
+      const t = document.getElementById('site-toast');
+      t.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #f39c12;"></i> ' + msg;
+      t.classList.add('show');
+      clearTimeout(t._timeout);
+      t._timeout = setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // Combo-to-key-item mapping
+    const COMBO_KEY_ITEMS = {
+      'Family Feast': 'Whole Grilled Chicken',
+      'Ultimate Braai Box': 'Charcoal Grilled Ribs',
+      'Date Night Duo': 'Flame-Grilled Quarter Chicken'
+    };
+
     // Cart
     let cart = [];
     const cartSidebar = document.getElementById('cart-sidebar');
@@ -1021,8 +1143,23 @@
 
     function renderMenu(category) {
       const items = category === 'all' ? menuData : menuData.filter(item => item.category === category);
-      menuGrid.innerHTML = items.map(item => `
-        <div class="menu-card reveal group">
+      const stockMap = getInventoryStock();
+
+      menuGrid.innerHTML = items.map(item => {
+        const stockInfo = stockMap ? stockMap[item.name] : null;
+        const isOutOfStock = stockInfo && stockInfo.stock <= 0;
+        const isLowStock = stockInfo && stockInfo.stock > 0 && stockInfo.stock <= stockInfo.reorderLevel;
+        const cardClass = isOutOfStock ? 'menu-card out-of-stock reveal group' : 'menu-card reveal group';
+        const btnClass = isOutOfStock ? 'btn-primary px-4 py-2 rounded-lg text-xs font-semibold btn-sold-out' : 'btn-primary px-4 py-2 rounded-lg text-xs font-semibold add-to-cart-menu';
+        const btnText = isOutOfStock ? 'Sold Out' : 'Add to Cart';
+        const lowStockBadge = isLowStock ? `<span class="stock-badge-low"><i class="fas fa-fire mr-1" style="font-size:9px;"></i>Only ${stockInfo.stock} left</span>` : '';
+        const outOverlay = isOutOfStock ? `<div class="stock-overlay"><span class="stock-badge-out"><i class="fas fa-ban mr-1"></i>Out of Stock</span></div>` : '';
+        const lowText = isLowStock ? `<p class="low-stock-text"><i class="fas fa-exclamation-triangle mr-1" style="font-size:10px;"></i>Low stock — ${stockInfo.stock} remaining</p>` : '';
+
+        return `
+        <div class="${cardClass}">
+          ${lowStockBadge}
+          ${outOverlay}
           <div class="relative h-72 overflow-hidden">
             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/1a1a1a/d4af37?text=F'"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -1031,14 +1168,19 @@
             <h3 class="text-lg font-bold text-white font-serif">${item.name}</h3>
             <p class="text-sm text-gray-500 mt-1.5 leading-relaxed">${item.desc}</p>
             <div class="flex items-center justify-between mt-5">
-              <span class="text-xl font-bold text-gold">R${item.price}</span>
-              <button class="btn-primary px-4 py-2 rounded-lg text-xs font-semibold add-to-cart-menu"
-                data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image}">Add to Cart</button>
+              <div>
+                <span class="text-xl font-bold text-gold">R${item.price}</span>
+                ${lowText}
+              </div>
+              <button class="${btnClass}"
+                data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image}">${btnText}</button>
             </div>
           </div>
         </div>
-      `).join('');
-      // Attach event listeners to add-to-cart buttons
+        `;
+      }).join('');
+
+      // Attach event listeners to add-to-cart buttons (only non-sold-out)
       document.querySelectorAll('.add-to-cart-menu').forEach(btn => {
         btn.addEventListener('click', function() {
           addToCart(
@@ -1049,6 +1191,7 @@
           );
         });
       });
+
       // Reveal animation
       setTimeout(() => {
         document.querySelectorAll('#menu-grid .menu-card').forEach(el => el.classList.add('visible'));
@@ -1073,6 +1216,15 @@
     // Combo Cart Buttons
     document.querySelectorAll('.add-to-cart-combo').forEach(btn => {
       btn.addEventListener('click', function() {
+        const comboName = this.dataset.name;
+        const keyItemName = COMBO_KEY_ITEMS[comboName];
+        if (keyItemName) {
+          const stockInfo = getItemStock(keyItemName);
+          if (stockInfo && stockInfo.stock <= 0) {
+            showSiteToast(`Sorry, ${comboName} is unavailable — ${keyItemName} is out of stock.`);
+            return;
+          }
+        }
         addToCart(
           Math.floor(Math.random() * 90000) + 10000,
           this.dataset.name,
@@ -1081,6 +1233,31 @@
         );
       });
     });
+
+    // Update combo cards based on stock
+    function updateComboStock() {
+      const comboCards = document.querySelectorAll('.combo-card');
+      comboCards.forEach(card => {
+        const btn = card.querySelector('.add-to-cart-combo');
+        if (!btn) return;
+        const comboName = btn.dataset.name;
+        const keyItemName = COMBO_KEY_ITEMS[comboName];
+        if (!keyItemName) return;
+        const stockInfo = getItemStock(keyItemName);
+        if (stockInfo && stockInfo.stock <= 0) {
+          card.classList.add('out-of-stock');
+          if (!card.querySelector('.combo-stock-overlay')) {
+            const overlay = document.createElement('div');
+            overlay.className = 'combo-stock-overlay';
+            overlay.innerHTML = '<span class="stock-badge-out"><i class="fas fa-ban mr-1"></i>Unavailable</span>';
+            card.appendChild(overlay);
+          }
+          btn.textContent = 'Unavailable';
+          btn.classList.add('btn-sold-out');
+        }
+      });
+    }
+    updateComboStock();
 
     // Navbar
     const navbar = document.getElementById('navbar');
@@ -1388,6 +1565,9 @@
     renderMenu('all');
     updateCart();
   </script>
+
+  <!-- Site Toast -->
+  <div id="site-toast" class="site-toast"></div>
 
   <!-- Mobile Bottom Nav -->
   <div class="fixed bottom-0 left-0 right-0 z-40 lg:hidden" style="background: rgba(15,15,15,0.96); backdrop-filter: blur(20px) saturate(180%); border-top: 1px solid rgba(212,175,55,0.12); padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 12px)); box-shadow: 0 -4px 30px rgba(0,0,0,0.5);">
