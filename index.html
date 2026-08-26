@@ -25,11 +25,13 @@
   <meta name="twitter:description" content="Charcoal-grilled peri-peri chicken in Johannesburg." />
   <meta name="twitter:image" content="https://chicken-fiestas.malikstopher.workers.dev/logo.jpg" />
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Inline SVG Icons (replaces Font Awesome CDN) -->
+  <style>
+    .icon { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="video" href="video/hero-desktop-opt.mp4" media="(min-width: 769px)" fetchpriority="high">
   <link rel="preload" as="video" href="video/mobile-hero-opt-fast.mp4" media="(max-width: 768px)" fetchpriority="high">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -694,8 +696,8 @@
   <!-- Lightbox Modal -->
   <div id="lightbox" class="fixed inset-0 z-[999] flex items-center justify-center pointer-events-none opacity-0 transition-all duration-500" style="background: rgba(0,0,0,0.92); backdrop-filter: blur(12px);">
     <button id="lb-close" class="absolute top-5 right-5 w-12 h-12 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all text-3xl z-10">&times;</button>
-    <button id="lb-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all text-2xl z-10 hidden"><i class="fas fa-chevron-left"></i></button>
-    <button id="lb-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all text-2xl z-10 hidden"><i class="fas fa-chevron-right"></i></button>
+    <button id="lb-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all z-10 hidden"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+    <button id="lb-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all z-10 hidden"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
     <img id="lb-img" class="max-h-[88vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl scale-95 transition-all duration-500" style="box-shadow: 0 0 80px rgba(212,175,55,0.1);" />
     <div id="lb-caption" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/80 text-sm font-medium tracking-wide opacity-0 transition-all duration-500"></div>
     <div id="lb-counter" class="absolute top-5 left-5 text-white/50 text-xs font-mono opacity-0 transition-all duration-500"></div>
@@ -772,17 +774,19 @@
       <!-- CTA Buttons -->
       <div class="hidden lg:flex items-center justify-center gap-6">
           <a href="#menu" class="btn-outline text-white px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3 magnetic-btn">
-            <i class="fas fa-fire"></i> Explore Menu
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg>
+            Explore Menu
           </a>
         <a href="#contact" class="btn-outline px-10 py-4 rounded-full text-base sm:text-lg font-semibold inline-flex items-center gap-3 magnetic-btn">
-          <i class="fas fa-truck"></i> Order Online
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+          Order Online
         </a>
       </div>
     </div>
   </section>
 
   <!-- Our Story -->
-  <section id="story" class="py-24 lg:py-32 relative">
+  <section id="story" class="py-24 lg:py-32 relative" style="content-visibility: auto; contain-intrinsic-size: 0 800px;">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <div class="reveal">
@@ -803,16 +807,16 @@
         </div>
         <div class="reveal grid grid-cols-2 gap-3">
           <div class="rounded-xl overflow-hidden">
-            <img src="chicken-grilled.jpg" alt="Charcoal grilling chicken over open flame at Fiestas Chicken Johannesburg" class="w-full h-64 object-cover rounded-xl" />
+            <img src="chicken-grilled.jpg" alt="Charcoal grilling chicken over open flame at Fiestas Chicken Johannesburg" class="w-full h-64 object-cover rounded-xl" width="520" height="256" loading="lazy" decoding="async" />
           </div>
           <div class="rounded-xl overflow-hidden mt-8">
-            <img src="fire.jpg" alt="Open flame charcoal braai cooking at Fiestas Chicken" class="w-full h-64 object-cover rounded-xl" />
+            <img src="fire.jpg" alt="Open flame charcoal braai cooking at Fiestas Chicken" class="w-full h-64 object-cover rounded-xl" width="520" height="256" loading="lazy" decoding="async" />
           </div>
           <div class="rounded-xl overflow-hidden -mt-8">
-            <img src="Close-up Flame-Grilled Chicken.jpg" alt="Flame grilled peri-peri quarter chicken at Fiestas Chicken" class="w-full h-48 object-cover rounded-xl" />
+            <img src="Close-up Flame-Grilled Chicken.jpg" alt="Flame grilled peri-peri quarter chicken at Fiestas Chicken" class="w-full h-48 object-cover rounded-xl" width="520" height="192" loading="lazy" decoding="async" />
           </div>
           <div class="rounded-xl overflow-hidden">
-            <img src="art.jpg" alt="Peri-peri chicken platter at Fiestas Chicken restaurant" class="w-full h-48 object-cover rounded-xl" />
+            <img src="art.jpg" alt="Peri-peri chicken platter at Fiestas Chicken restaurant" class="w-full h-48 object-cover rounded-xl" width="520" height="192" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -820,7 +824,7 @@
   </section>
 
   <!-- Signature Menu -->
-  <section id="menu" class="py-24 lg:py-32 relative bg-[#0D0D0D]">
+  <section id="menu" class="py-24 lg:py-32 relative bg-[#0D0D0D]" style="content-visibility: auto; contain-intrinsic-size: 0 1200px;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center reveal">
         <span class="section-subtitle text-gold">Signature Menu</span>
@@ -852,7 +856,7 @@
   </section>
 
   <!-- Feast & Combos -->
-  <section id="combos" class="py-24 lg:py-32 relative">
+  <section id="combos" class="py-24 lg:py-32 relative" style="content-visibility: auto; contain-intrinsic-size: 0 800px;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center reveal">
         <span class="section-subtitle text-gold">Feast & Combos</span>
@@ -866,7 +870,7 @@
         <div class="combo-card reveal">
           <div class="best-seller">Best Seller</div>
           <div class="relative h-64 overflow-hidden">
-            <img src="Family Feast.jpg" alt="Family Feast" class="w-full h-full object-cover" />
+            <img src="Family Feast.jpg" alt="Family Feast" class="w-full h-full object-cover" width="640" height="256" loading="lazy" decoding="async" />
           </div>
           <div class="p-6 lg:p-8">
             <h3 class="text-2xl font-bold text-white" style="font-family:'Cormorant Garamond',serif;">Family Feast</h3>
@@ -882,7 +886,7 @@
         <!-- Ultimate Braai Box -->
         <div class="combo-card reveal">
           <div class="relative h-64 overflow-hidden">
-            <img src="Ultimate Braai Box.jpg" alt="Ultimate Braai Box" class="w-full h-full object-cover" />
+            <img src="Ultimate Braai Box.jpg" alt="Ultimate Braai Box" class="w-full h-full object-cover" width="640" height="256" loading="lazy" decoding="async" />
           </div>
           <div class="p-6 lg:p-8">
             <h3 class="text-2xl font-bold text-white" style="font-family:'Cormorant Garamond',serif;">Ultimate Braai Box</h3>
@@ -898,7 +902,7 @@
         <!-- Date Night Duo -->
         <div class="combo-card reveal">
           <div class="relative h-64 overflow-hidden">
-            <img src="Date Night Duo.jpg" alt="Date Night Duo" class="w-full h-full object-cover" />
+            <img src="Date Night Duo.jpg" alt="Date Night Duo" class="w-full h-full object-cover" width="640" height="256" loading="lazy" decoding="async" />
           </div>
           <div class="p-6 lg:p-8">
             <h3 class="text-2xl font-bold text-white" style="font-family:'Cormorant Garamond',serif;">Date Night Duo</h3>
@@ -915,7 +919,7 @@
   </section>
 
   <!-- Live Fire Experience -->
-  <section class="py-24 lg:py-32 relative bg-[#0D0D0D]">
+  <section class="py-24 lg:py-32 relative bg-[#0D0D0D]" style="content-visibility: auto; contain-intrinsic-size: 0 600px;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center reveal">
         <span class="section-subtitle text-gold">Live Fire Experience</span>
@@ -926,26 +930,26 @@
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-14">
         <div class="gallery-item col-span-2 row-span-2 h-80">
-          <img src="Close-up Flame-Grilled Chicken.jpg" alt="Braai experience" class="w-full h-full object-cover" />
+          <img src="Close-up Flame-Grilled Chicken.jpg" alt="Braai experience" class="w-full h-full object-cover" width="520" height="320" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-item h-40">
-          <img src="chicken-grilled.jpg" alt="Grilled chicken" class="w-full h-full object-cover" />
+          <img src="chicken-grilled.jpg" alt="Grilled chicken" class="w-full h-full object-cover" width="520" height="160" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-item h-40">
-          <img src="art.jpg" alt="Flame grilled" class="w-full h-full object-cover" />
+          <img src="art.jpg" alt="Flame grilled" class="w-full h-full object-cover" width="520" height="160" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-item h-40">
-          <img src="Charcoal Grilled Ribs.jpg" alt="Open fire" class="w-full h-full object-cover" />
+          <img src="Charcoal Grilled Ribs.jpg" alt="Open fire" class="w-full h-full object-cover" width="520" height="160" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-item h-40">
-          <img src="fire.jpg" alt="Cooking process" class="w-full h-full object-cover" />
+          <img src="fire.jpg" alt="Cooking process" class="w-full h-full object-cover" width="520" height="160" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
   </section>
 
   <!-- Order & Delivery -->
-  <section id="order" class="py-24 lg:py-32 relative">
+  <section id="order" class="py-24 lg:py-32 relative" style="content-visibility: auto; contain-intrinsic-size: 0 600px;">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="reveal">
         <span class="section-subtitle text-gold">Order & Delivery</span>
@@ -991,14 +995,14 @@
         <!-- Brand -->
         <div class="sm:col-span-2 lg:col-span-1">
           <a href="#" class="flex items-center gap-3 mb-4">
-            <img src="logo.jpg" alt="Fiestas Chicken Logo" class="w-10 h-10 rounded-full object-cover" />
+            <img src="logo.jpg" alt="Fiestas Chicken Logo" class="w-10 h-10 rounded-full object-cover" width="40" height="40" loading="lazy" decoding="async" />
             <span class="font-bold text-lg" style="color: #f5f5f5; font-family:'Cormorant Garamond',serif;">Fiestas Chicken</span>
           </a>
           <p class="text-sm leading-relaxed mb-6" style="color: #bbb;">Charcoal-grilled peri-peri chicken in Johannesburg.</p>
           <div class="flex gap-3">
-            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61591916552288" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.tiktok.com/@fiestas_chicken" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="https://www.facebook.com/profile.php?id=61591916552288" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.tiktok.com/@fiestas_chicken" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center hover:text-gold transition-all border" style="background: #222; border-color: #333; color: #ccc;"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
           </div>
         </div>
 
@@ -1034,9 +1038,9 @@
             <li class="flex justify-between"><span>Sunday</span><span style="color: #f5f5f5;">12:00–20:00</span></li>
           </ul>
           <div class="mt-6 pt-6 border-t flex flex-wrap gap-3" style="border-color: #333;">
-            <a href="#" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white" style="background: #2ecc71;"><i class="fab fa-uber mr-1"></i> Uber Eats</a>
-            <a href="#" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white" style="background: #e74c3c;"><i class="fas fa-motorcycle mr-1"></i> Mr D</a>
-            <a href="https://wa.me/2787757734" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white" style="background: #25D366;"><i class="fab fa-whatsapp mr-1"></i> WhatsApp</a>
+            <a href="#" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white inline-flex items-center gap-1" style="background: #2ecc71;"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg> Uber Eats</a>
+            <a href="#" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white inline-flex items-center gap-1" style="background: #e74c3c;"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zm-9-1a2 2 0 0 1 4 0v1h-4V6zm10 14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h6v1a1 1 0 0 0 2 0V9h2v11z"/></svg> Mr D</a>
+            <a href="https://wa.me/2787757734" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1.5 rounded-full font-semibold text-white inline-flex items-center gap-1" style="background: #25D366;"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
           </div>
         </div>
       </div>
@@ -1122,7 +1126,7 @@
 
     function showSiteToast(msg) {
       const t = document.getElementById('site-toast');
-      t.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #f39c12;"></i> ' + msg;
+      t.innerHTML = '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: #f39c12;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> ' + msg;
       t.classList.add('show');
       clearTimeout(t._timeout);
       t._timeout = setTimeout(() => t.classList.remove('show'), 3500);
@@ -1166,7 +1170,7 @@
 
       cartItems.innerHTML = cart.map(item => `
         <div class="cart-item" data-id="${item.id}">
-          <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.src='https://placehold.co/100x100/1a1a1a/d4af37?text=F'"/>
+          <img src="${item.image}" alt="${item.name}" class="cart-item-img" width="50" height="50" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/100x100/1a1a1a/d4af37?text=F'"/>
           <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-white truncate">${item.name}</p>
             <p class="text-gold text-sm font-semibold">R${item.price}</p>
@@ -1246,16 +1250,16 @@
         const cardClass = isOutOfStock ? 'menu-card out-of-stock reveal group' : 'menu-card reveal group';
         const btnClass = isOutOfStock ? 'btn-primary px-4 py-2 rounded-lg text-xs font-semibold btn-sold-out' : 'btn-primary px-4 py-2 rounded-lg text-xs font-semibold add-to-cart-menu';
         const btnText = isOutOfStock ? 'Sold Out' : 'Add to Cart';
-        const lowStockBadge = isLowStock ? `<span class="stock-badge-low"><i class="fas fa-fire mr-1" style="font-size:9px;"></i>Only ${stockInfo.stock} left</span>` : '';
-        const outOverlay = isOutOfStock ? `<div class="stock-overlay"><span class="stock-badge-out"><i class="fas fa-ban mr-1"></i>Out of Stock</span></div>` : '';
-        const lowText = isLowStock ? `<p class="low-stock-text"><i class="fas fa-exclamation-triangle mr-1" style="font-size:10px;"></i>Low stock: ${stockInfo.stock} remaining</p>` : '';
+        const lowStockBadge = isLowStock ? `<span class="stock-badge-low"><svg class="w-2.5 h-2.5 inline-block mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg>Only ${stockInfo.stock} left</span>` : '';
+        const outOverlay = isOutOfStock ? `<div class="stock-overlay"><span class="stock-badge-out"><svg class="w-3 h-3 inline-block mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>Out of Stock</span></div>` : '';
+        const lowText = isLowStock ? `<p class="low-stock-text"><svg class="w-2.5 h-2.5 inline-block mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: #f39c12;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>Low stock: ${stockInfo.stock} remaining</p>` : '';
 
         return `
         <div class="${cardClass}">
           ${lowStockBadge}
           ${outOverlay}
           <div class="relative h-72 overflow-hidden">
-            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/1a1a1a/d4af37?text=F'"/>
+            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" width="400" height="300" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400x300/1a1a1a/d4af37?text=F'"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
           <div class="p-5">
@@ -1343,7 +1347,7 @@
           if (!card.querySelector('.combo-stock-overlay')) {
             const overlay = document.createElement('div');
             overlay.className = 'combo-stock-overlay';
-            overlay.innerHTML = '<span class="stock-badge-out"><i class="fas fa-ban mr-1"></i>Unavailable</span>';
+            overlay.innerHTML = '<span class="stock-badge-out"><svg class="w-3 h-3 inline-block mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>Unavailable</span>';
             card.appendChild(overlay);
           }
           btn.textContent = 'Unavailable';
@@ -1521,7 +1525,7 @@
       }
     }
 
-    const particleCount = Math.min(50, Math.floor(window.innerWidth / 24) + 10);
+    const particleCount = window.innerWidth < 768 ? Math.min(20, Math.floor(window.innerWidth / 40) + 5) : Math.min(40, Math.floor(window.innerWidth / 30) + 8);
     for (let i = 0; i < particleCount; i++) {
       const p = new Ember();
       p.y = Math.random() * canvas.height * 1.2;
@@ -1529,7 +1533,8 @@
       particles.push(p);
     }
 
-    for (let i = 0; i < 20; i++) {
+    const sparkCount = window.innerWidth < 768 ? 8 : 15;
+    for (let i = 0; i < sparkCount; i++) {
       const p = new Ember();
       p.size = Math.random() * 8 + 4;
       p.baseSize = p.size;
@@ -1540,7 +1545,9 @@
       particles.push(p);
     }
 
+    let isAnimating = true;
     function animateParticles() {
+      if (!isAnimating) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach(p => { p.update(); p.draw(); });
@@ -1550,6 +1557,17 @@
 
       animFrame = requestAnimationFrame(animateParticles);
     }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isAnimating = false;
+        cancelAnimationFrame(animFrame);
+      } else {
+        isAnimating = true;
+        animateParticles();
+      }
+    });
+
     animateParticles();
 
     // Lightbox
@@ -1753,10 +1771,12 @@
   <div class="fixed bottom-0 left-0 right-0 z-40 lg:hidden" style="background: rgba(15,15,15,0.96); backdrop-filter: blur(20px) saturate(180%); border-top: 1px solid rgba(212,175,55,0.12); padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 12px)); box-shadow: 0 -4px 30px rgba(0,0,0,0.5);">
     <div class="flex items-center gap-3">
       <a href="#menu" class="flex-1 btn-primary text-white text-center py-3 rounded-xl text-xs font-semibold inline-flex items-center justify-center gap-2">
-        <i class="fas fa-fire text-sm"></i> Explore Menu
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg>
+        Explore Menu
       </a>
       <a href="#contact" class="flex-1 btn-outline text-center py-3 rounded-xl text-xs font-semibold inline-flex items-center justify-center gap-2">
-        <i class="fas fa-truck text-sm"></i> Order Online
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+        Order Online
       </a>
     </div>
   </div>
