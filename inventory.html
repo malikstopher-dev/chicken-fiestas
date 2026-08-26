@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fiestas Chicken – Inventory Management</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #C8102E;
+      --red-dark: #8B1E2E;
+      --gold: #D4AF37;
+      --gold-light: #E8B923;
+      --bg-dark: #0A0A0A;
+      --bg-card: #111111;
+      --bg-surface: #1A1A1A;
+      --bg-input: #1E1E1E;
+      --text-body: #B0B0B0;
+      --text-light: #E5E5E5;
+      --green: #2ecc71;
+      --orange: #f39c12;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-body);
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--text-light); }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+    #login-screen { display: flex; }
+    #app { display: none; }
+    #app.active { display: block; }
+
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid #222;
+      border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    }
+    .login-input {
+      background: var(--bg-input);
+      border: 1px solid #333;
+      color: var(--text-light);
+      border-radius: 10px;
+      padding: 12px 16px;
+      width: 100%;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    .login-input:focus { outline: none; border-color: var(--gold); }
+    .login-input::placeholder { color: #555; }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid #222;
+      border-radius: 14px;
+      padding: 20px 24px;
+      transition: all 0.3s;
+    }
+    .stat-card:hover { border-color: #333; transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      color: white;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(200,16,46,0.3);
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,16,46,0.5); }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), #B8962E);
+      color: #0A0A0A;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,175,55,0.5); }
+
+    .btn-outline {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-outline:hover { background: var(--gold); color: #0A0A0A; transform: translateY(-2px); }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-stock-in { background: var(--green); color: #fff; }
+    .btn-stock-in:hover { background: #27ae60; }
+    .btn-stock-out { background: var(--red); color: #fff; }
+    .btn-stock-out:hover { background: #a01020; }
+    .btn-edit { background: var(--gold); color: #0A0A0A; }
+    .btn-edit:hover { background: #c9a430; }
+    .btn-delete { background: #333; color: #ccc; }
+    .btn-delete:hover { background: #444; color: #fff; }
+
+    .form-input {
+      background: var(--bg-input);
+      border: 1px solid #333;
+      color: var(--text-light);
+      border-radius: 10px;
+      padding: 10px 14px;
+      width: 100%;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    .form-input:focus { outline: none; border-color: var(--gold); }
+    .form-input::placeholder { color: #555; }
+    .form-select {
+      background: var(--bg-input);
+      border: 1px solid #333;
+      color: var(--text-light);
+      border-radius: 10px;
+      padding: 10px 14px;
+      width: 100%;
+      font-size: 14px;
+      transition: border-color 0.3s;
+      cursor: pointer;
+    }
+    .form-select:focus { outline: none; border-color: var(--gold); }
+    .form-select option { background: var(--bg-card); color: var(--text-light); }
+
+    .search-box {
+      background: var(--bg-input);
+      border: 1px solid #333;
+      color: var(--text-light);
+      border-radius: 10px;
+      padding: 10px 14px 10px 40px;
+      width: 100%;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    .search-box:focus { outline: none; border-color: var(--gold); }
+    .search-box::placeholder { color: #555; }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-instock { background: rgba(46,204,113,0.15); color: var(--green); }
+    .badge-lowstock { background: rgba(243,156,18,0.15); color: var(--orange); }
+    .badge-outofstock { background: rgba(200,16,46,0.15); color: var(--red); }
+
+    .table-wrap {
+      background: var(--bg-card);
+      border: 1px solid #222;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: var(--bg-surface);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #222;
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+    tr:hover { background: rgba(255,255,255,0.02); }
+    tr.row-lowstock { background: rgba(243,156,18,0.06); }
+    tr.row-outofstock { background: rgba(200,16,46,0.06); }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 28px;
+      width: 90%;
+      max-width: 480px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-success { background: var(--green); color: #fff; }
+    .toast-error { background: var(--red); color: #fff; }
+    .toast-warning { background: var(--orange); color: #fff; }
+
+    .empty-state { padding: 60px 20px; text-align: center; color: #555; }
+
+    @media (max-width: 768px) {
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 800px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .form-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== LOGIN SCREEN ==================== -->
+  <div id="login-screen" class="min-h-screen items-center justify-center p-4">
+    <div class="login-card p-8 w-full max-w-sm">
+      <div class="text-center mb-8">
+        <img src="logo.jpg" alt="Fiestas Chicken" class="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
+        <h1 class="text-2xl font-bold" style="font-family: 'Playfair Display', serif; color: var(--text-light);">Inventory Panel</h1>
+        <p class="text-sm mt-2" style="color: #666;">Admin login required</p>
+      </div>
+      <form id="login-form" onsubmit="return handleLogin(event)">
+        <div class="mb-4">
+          <label class="block text-xs font-semibold mb-2 uppercase tracking-wider" style="color: #888;">Username</label>
+          <input type="text" id="login-user" class="login-input" placeholder="Enter username" autocomplete="username" required />
+        </div>
+        <div class="mb-6">
+          <label class="block text-xs font-semibold mb-2 uppercase tracking-wider" style="color: #888;">Password</label>
+          <input type="password" id="login-pass" class="login-input" placeholder="Enter password" autocomplete="current-password" required />
+        </div>
+        <p id="login-error" class="text-sm mb-4 hidden" style="color: var(--red);"></p>
+        <button type="submit" class="btn-primary w-full text-center">
+          <i class="fas fa-lock mr-2"></i> Sign In
+        </button>
+      </form>
+      <div class="text-center mt-6">
+        <a href="index.html" class="text-xs hover:underline" style="color: #555;"><i class="fas fa-arrow-left mr-1"></i> Back to Site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN APP ==================== -->
+  <div id="app" class="min-h-screen">
+
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-50 border-b" style="background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-color: #222;">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="logo.jpg" alt="Logo" class="w-8 h-8 rounded-full object-cover" />
+          <div>
+            <h2 class="text-sm font-bold" style="color: var(--text-light); font-family: 'Playfair Display', serif;">Fiestas Chicken</h2>
+            <p class="text-xs" style="color: #555;">Inventory Management</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="openAddModal()" class="btn-primary text-sm hidden sm:block">
+            <i class="fas fa-plus mr-1"></i> Add Item
+          </button>
+          <button onclick="openAddModal()" class="btn-primary text-sm sm:hidden" style="padding: 10px 14px;">
+            <i class="fas fa-plus"></i>
+          </button>
+          <a href="index.html" class="text-xs px-3 py-2 rounded-lg border hover:border-gold transition-all" style="border-color: #333; color: #888;">
+            <i class="fas fa-external-link-alt mr-1"></i> Site
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
+      <div class="stats-grid grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="stat-card">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(200,16,46,0.15);">
+              <i class="fas fa-boxes-stacked" style="color: var(--red);"></i>
+            </div>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Total Items</span>
+          </div>
+          <p class="text-2xl font-bold" style="color: var(--text-light);" id="stat-total">0</p>
+        </div>
+        <div class="stat-card">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(212,175,55,0.15);">
+              <i class="fas fa-coins" style="color: var(--gold);"></i>
+            </div>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Stock Value</span>
+          </div>
+          <p class="text-2xl font-bold" style="color: var(--text-light);" id="stat-value">R0</p>
+        </div>
+        <div class="stat-card">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(243,156,18,0.15);">
+              <i class="fas fa-triangle-exclamation" style="color: var(--orange);"></i>
+            </div>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Low Stock</span>
+          </div>
+          <p class="text-2xl font-bold" style="color: var(--orange);" id="stat-low">0</p>
+        </div>
+        <div class="stat-card">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(200,16,46,0.15);">
+              <i class="fas fa-ban" style="color: var(--red);"></i>
+            </div>
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color: #666;">Out of Stock</span>
+          </div>
+          <p class="text-2xl font-bold" style="color: var(--red);" id="stat-out">0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters + Actions -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+      <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <div class="relative" style="flex:1; min-width: 200px;">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2" style="color: #555;"></i>
+            <input type="text" id="search-input" class="search-box" placeholder="Search items, SKU, category..." oninput="renderTable()" />
+          </div>
+          <select id="filter-category" class="form-select" style="width: auto; min-width: 150px;" onchange="renderTable()">
+            <option value="">All Categories</option>
+          </select>
+          <select id="filter-status" class="form-select" style="width: auto; min-width: 140px;" onchange="renderTable()">
+            <option value="">All Status</option>
+            <option value="instock">In Stock</option>
+            <option value="lowstock">Low Stock</option>
+            <option value="outofstock">Out of Stock</option>
+          </select>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="exportData()" class="btn-outline text-xs">
+            <i class="fas fa-download mr-1"></i> Export
+          </button>
+          <label class="btn-outline text-xs cursor-pointer" style="display:inline-flex; align-items:center;">
+            <i class="fas fa-upload mr-1"></i> Import
+            <input type="file" accept=".json" class="hidden" onchange="importData(event)" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-10">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>SKU</th>
+              <th>Category</th>
+              <th style="text-align:center;">Stock</th>
+              <th>Price</th>
+              <th>Reorder Lvl</th>
+              <th>Status</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-body"></tbody>
+        </table>
+        <div id="empty-state" class="empty-state hidden">
+          <i class="fas fa-box-open text-4xl mb-4" style="color: #333;"></i>
+          <p class="text-sm" style="color: #555;">No items found</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t py-6 text-center text-xs" style="border-color: #1a1a1a; color: #444;">
+      <p>&copy; 2024 Fiestas Chicken. Inventory Management System.</p>
+      <p class="mt-1">Data stored in browser localStorage. <a href="#" onclick="exportData(); return false;" class="hover:underline" style="color: var(--gold);">Backup your data</a></p>
+    </footer>
+  </div>
+
+  <!-- ==================== ADD/EDIT MODAL ==================== -->
+  <div id="item-modal" class="modal-overlay" onclick="if(event.target===this) closeModal()">
+    <div class="modal-card">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-bold" style="color: var(--text-light); font-family: 'Playfair Display', serif;" id="modal-title">Add New Item</h3>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-800 transition" style="color: #666;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <form id="item-form" onsubmit="return saveItem(event)">
+        <input type="hidden" id="edit-id" value="" />
+        <div class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Item Name *</label>
+            <input type="text" id="item-name" class="form-input" placeholder="e.g. Peri-Peri Wings (6pc)" required />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">SKU *</label>
+            <input type="text" id="item-sku" class="form-input" placeholder="Auto-generated" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Category *</label>
+            <select id="item-category" class="form-select" required>
+              <option value="">Select category</option>
+              <option value="Burgers">Burgers</option>
+              <option value="Grills">Grills</option>
+              <option value="Peri">Peri</option>
+              <option value="Starters">Starters</option>
+              <option value="Desserts">Desserts</option>
+              <option value="Drinks">Drinks</option>
+              <option value="Feasts">Feasts</option>
+              <option value="Shawarmas">Shawarmas</option>
+              <option value="Thumbs Up">Thumbs Up</option>
+              <option value="Loaded Fries">Loaded Fries</option>
+              <option value="Strips">Strips</option>
+              <option value="Salads">Salads</option>
+              <option value="Sides">Sides</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Stock Quantity *</label>
+            <input type="number" id="item-stock" class="form-input" min="0" placeholder="20" required />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Price (R) *</label>
+            <input type="number" id="item-price" class="form-input" min="0" step="0.01" placeholder="49.90" required />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Reorder Level *</label>
+            <input type="number" id="item-reorder" class="form-input" min="0" placeholder="5" required />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style="color: #888;">Sold Count</label>
+            <input type="number" id="item-sold" class="form-input" min="0" placeholder="0" />
+          </div>
+        </div>
+        <div class="flex gap-3 justify-end">
+          <button type="button" onclick="closeModal()" class="btn-outline text-sm">Cancel</button>
+          <button type="submit" class="btn-gold text-sm" id="modal-save-btn">
+            <i class="fas fa-save mr-1"></i> Save Item
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== DELETE MODAL ==================== -->
+  <div id="delete-modal" class="modal-overlay" onclick="if(event.target===this) closeDeleteModal()">
+    <div class="modal-card" style="max-width: 400px;">
+      <div class="text-center">
+        <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style="background: rgba(200,16,46,0.15);">
+          <i class="fas fa-trash-alt text-xl" style="color: var(--red);"></i>
+        </div>
+        <h3 class="text-lg font-bold mb-2" style="color: var(--text-light);">Delete Item?</h3>
+        <p class="text-sm mb-6" style="color: #666;" id="delete-item-name">Are you sure you want to delete this item?</p>
+        <div class="flex gap-3 justify-center">
+          <button onclick="closeDeleteModal()" class="btn-outline text-sm">Cancel</button>
+          <button onclick="confirmDelete()" class="btn-primary text-sm" style="background: var(--red);">
+            <i class="fas fa-trash mr-1"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast" class="toast"></div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // ============ CONFIG ============
+    const ADMIN_USER = 'admin';
+    const ADMIN_PASS = 'admin';
+    const STORAGE_KEY = 'fiestas_inventory';
+    const AUTH_KEY = 'fiestas_inv_auth';
+    let loginAttempts = 0;
+    let deleteTargetId = null;
+
+    // ============ DEFAULT 40 MENU ITEMS ============
+    const DEFAULT_ITEMS = [
+      { id: 1, name: "Signature Charcoal Burger", sku: "BUR-001", category: "Burgers", stock: 20, price: 89, reorderLevel: 5, sold: 0 },
+      { id: 2, name: "Peri-Peri Chicken Burger", sku: "BUR-002", category: "Burgers", stock: 20, price: 79, reorderLevel: 5, sold: 0 },
+      { id: 3, name: "Double Cheese Bacon Burger", sku: "BUR-003", category: "Burgers", stock: 20, price: 99, reorderLevel: 5, sold: 0 },
+      { id: 4, name: "Whole Grilled Chicken", sku: "GRL-001", category: "Grills", stock: 20, price: 179, reorderLevel: 5, sold: 0 },
+      { id: 5, name: "Flame-Grilled Quarter Chicken", sku: "GRL-002", category: "Grills", stock: 20, price: 69, reorderLevel: 5, sold: 0 },
+      { id: 6, name: "Charcoal Grilled Ribs", sku: "GRL-003", category: "Grills", stock: 20, price: 139, reorderLevel: 5, sold: 0 },
+      { id: 7, name: "Peri-Peri Wings (6pc)", sku: "PER-001", category: "Peri", stock: 20, price: 59, reorderLevel: 5, sold: 0 },
+      { id: 8, name: "Peri-Peri Platter", sku: "PER-002", category: "Peri", stock: 20, price: 129, reorderLevel: 5, sold: 0 },
+      { id: 9, name: "Loaded Nachos", sku: "STR-001", category: "Starters", stock: 20, price: 69, reorderLevel: 5, sold: 0 },
+      { id: 10, name: "Crispy Calamari", sku: "STR-002", category: "Starters", stock: 20, price: 74, reorderLevel: 5, sold: 0 },
+      { id: 11, name: "Chips & Dip Trio", sku: "STR-003", category: "Starters", stock: 20, price: 49, reorderLevel: 5, sold: 0 },
+      { id: 12, name: "Chocolate Lava Cake", sku: "DES-001", category: "Desserts", stock: 20, price: 59, reorderLevel: 5, sold: 0 },
+      { id: 13, name: "Malva Pudding", sku: "DES-002", category: "Desserts", stock: 20, price: 54, reorderLevel: 5, sold: 0 },
+      { id: 14, name: "Craft Sodas", sku: "DRK-001", category: "Drinks", stock: 20, price: 24, reorderLevel: 5, sold: 0 },
+      { id: 15, name: "Local Craft Beers", sku: "DRK-002", category: "Drinks", stock: 20, price: 39, reorderLevel: 5, sold: 0 },
+      { id: 16, name: "South African Wines", sku: "DRK-003", category: "Drinks", stock: 20, price: 44, reorderLevel: 5, sold: 0 },
+      { id: 17, name: "1/4 Chicken", sku: "FST-001", category: "Feasts", stock: 20, price: 45.90, reorderLevel: 5, sold: 0 },
+      { id: 18, name: "1/4 Chicken & Side", sku: "FST-002", category: "Feasts", stock: 20, price: 55.90, reorderLevel: 5, sold: 0 },
+      { id: 19, name: "1/4 Chicken, Side & 330ml Drink", sku: "FST-003", category: "Feasts", stock: 20, price: 65.90, reorderLevel: 5, sold: 0 },
+      { id: 20, name: "1/2 Chicken", sku: "FST-004", category: "Feasts", stock: 20, price: 90, reorderLevel: 5, sold: 0 },
+      { id: 21, name: "1/2 Chicken & Side", sku: "FST-005", category: "Feasts", stock: 20, price: 100.90, reorderLevel: 5, sold: 0 },
+      { id: 22, name: "1/2 Chicken, Side & 330ml Drink", sku: "FST-006", category: "Feasts", stock: 20, price: 110.90, reorderLevel: 5, sold: 0 },
+      { id: 23, name: "Chicken Shawarma", sku: "SHW-001", category: "Shawarmas", stock: 20, price: 69.90, reorderLevel: 5, sold: 0 },
+      { id: 24, name: "Chicken Shawarma & Single Side", sku: "SHW-002", category: "Shawarmas", stock: 20, price: 79.90, reorderLevel: 5, sold: 0 },
+      { id: 25, name: "Chicken Shawarma, Side & 330ml Drink", sku: "SHW-003", category: "Shawarmas", stock: 20, price: 89.90, reorderLevel: 5, sold: 0 },
+      { id: 26, name: "Thumbs Up", sku: "THU-001", category: "Thumbs Up", stock: 20, price: 189.90, reorderLevel: 5, sold: 0 },
+      { id: 27, name: "Cherry Loaded Fries", sku: "LFR-001", category: "Loaded Fries", stock: 20, price: 44.90, reorderLevel: 5, sold: 0 },
+      { id: 28, name: "Chicken Strips", sku: "STP-001", category: "Strips", stock: 20, price: 29.90, reorderLevel: 5, sold: 0 },
+      { id: 29, name: "Chicken Strips & Single Side", sku: "STP-002", category: "Strips", stock: 20, price: 39.90, reorderLevel: 5, sold: 0 },
+      { id: 30, name: "Chicken Strips, Side & 330ml Drink", sku: "STP-003", category: "Strips", stock: 20, price: 49.90, reorderLevel: 5, sold: 0 },
+      { id: 31, name: "Garden Salad", sku: "SAL-001", category: "Salads", stock: 20, price: 36.90, reorderLevel: 5, sold: 0 },
+      { id: 32, name: "Mediterranean Salad", sku: "SAL-002", category: "Salads", stock: 20, price: 46.90, reorderLevel: 5, sold: 0 },
+      { id: 33, name: "Fries — Single", sku: "SID-001", category: "Sides", stock: 20, price: 19.90, reorderLevel: 5, sold: 0 },
+      { id: 34, name: "Fries — Sharing", sku: "SID-002", category: "Sides", stock: 20, price: 36.90, reorderLevel: 5, sold: 0 },
+      { id: 35, name: "Pap & Tomato Relish — Single", sku: "SID-003", category: "Sides", stock: 20, price: 19.90, reorderLevel: 5, sold: 0 },
+      { id: 36, name: "Pap & Tomato Relish — Sharing", sku: "SID-004", category: "Sides", stock: 20, price: 36.90, reorderLevel: 5, sold: 0 },
+      { id: 37, name: "Spicy Rice — Single", sku: "SID-005", category: "Sides", stock: 20, price: 19.90, reorderLevel: 5, sold: 0 },
+      { id: 38, name: "Spicy Rice — Sharing", sku: "SID-006", category: "Sides", stock: 20, price: 36.90, reorderLevel: 5, sold: 0 },
+      { id: 39, name: "Coleslaw — Single", sku: "SID-007", category: "Sides", stock: 20, price: 19.90, reorderLevel: 5, sold: 0 },
+      { id: 40, name: "Coleslaw — Sharing", sku: "SID-008", category: "Sides", stock: 20, price: 36.90, reorderLevel: 5, sold: 0 }
+    ];
+
+    // ============ AUTH ============
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-user').value.trim();
+      const pass = document.getElementById('login-pass').value;
+      const errEl = document.getElementById('login-error');
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        sessionStorage.setItem(AUTH_KEY, '1');
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app').classList.add('active');
+        init();
+      } else {
+        loginAttempts++;
+        const remaining = 5 - loginAttempts;
+        if (loginAttempts >= 5) {
+          errEl.textContent = 'Too many attempts. Please refresh.';
+          errEl.classList.remove('hidden');
+          document.getElementById('login-form').querySelector('button').disabled = true;
+        } else {
+          errEl.textContent = `Invalid credentials. ${remaining} attempt${remaining !== 1 ? 's' : ''} left.`;
+          errEl.classList.remove('hidden');
+        }
+      }
+      return false;
+    }
+
+    // ============ STORAGE ============
+    function getItems() {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (!data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ITEMS));
+        return [...DEFAULT_ITEMS];
+      }
+      return JSON.parse(data);
+    }
+
+    function saveItems(items) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    }
+
+    function getNextId() {
+      const items = getItems();
+      return items.length > 0 ? Math.max(...items.map(i => i.id)) + 1 : 1;
+    }
+
+    function generateSKU(category) {
+      const prefix = {
+        'Burgers': 'BUR', 'Grills': 'GRL', 'Peri': 'PER', 'Starters': 'STR',
+        'Desserts': 'DES', 'Drinks': 'DRK', 'Feasts': 'FST', 'Shawarmas': 'SHW',
+        'Thumbs Up': 'THU', 'Loaded Fries': 'LFR', 'Strips': 'STP', 'Salads': 'SAL', 'Sides': 'SID'
+      }[category] || 'ITM';
+      const items = getItems();
+      const count = items.filter(i => i.sku && i.sku.startsWith(prefix)).length;
+      return `${prefix}-${String(count + 1).padStart(3, '0')}`;
+    }
+
+    // ============ RENDER ============
+    function getStatus(item) {
+      if (item.stock <= 0) return 'outofstock';
+      if (item.stock <= item.reorderLevel) return 'lowstock';
+      return 'instock';
+    }
+
+    function getStatusLabel(status) {
+      switch (status) {
+        case 'outofstock': return '<span class="badge badge-outofstock">Out of Stock</span>';
+        case 'lowstock': return '<span class="badge badge-lowstock">Low Stock</span>';
+        default: return '<span class="badge badge-instock">In Stock</span>';
+      }
+    }
+
+    function renderStats() {
+      const items = getItems();
+      const total = items.length;
+      const value = items.reduce((sum, i) => sum + (i.stock * i.price), 0);
+      const low = items.filter(i => i.stock > 0 && i.stock <= i.reorderLevel).length;
+      const out = items.filter(i => i.stock <= 0).length;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-value').textContent = 'R' + value.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('stat-low').textContent = low;
+      document.getElementById('stat-out').textContent = out;
+    }
+
+    function renderCategories() {
+      const items = getItems();
+      const cats = [...new Set(items.map(i => i.category))].sort();
+      const sel = document.getElementById('filter-category');
+      const current = sel.value;
+      sel.innerHTML = '<option value="">All Categories</option>';
+      cats.forEach(c => {
+        sel.innerHTML += `<option value="${c}" ${current === c ? 'selected' : ''}>${c}</option>`;
+      });
+    }
+
+    function renderTable() {
+      const items = getItems();
+      const search = document.getElementById('search-input').value.toLowerCase();
+      const catFilter = document.getElementById('filter-category').value;
+      const statusFilter = document.getElementById('filter-status').value;
+
+      let filtered = items.filter(item => {
+        const matchSearch = !search ||
+          item.name.toLowerCase().includes(search) ||
+          item.sku.toLowerCase().includes(search) ||
+          item.category.toLowerCase().includes(search);
+        const matchCat = !catFilter || item.category === catFilter;
+        const status = getStatus(item);
+        const matchStatus = !statusFilter || status === statusFilter;
+        return matchSearch && matchCat && matchStatus;
+      });
+
+      const tbody = document.getElementById('inventory-body');
+      const empty = document.getElementById('empty-state');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+      tbody.innerHTML = filtered.map(item => {
+        const status = getStatus(item);
+        const rowClass = status === 'outofstock' ? 'row-outofstock' : status === 'lowstock' ? 'row-lowstock' : '';
+        return `
+          <tr class="${rowClass}">
+            <td>
+              <span class="font-medium" style="color: var(--text-light);">${item.name}</span>
+              ${item.sold > 0 ? `<br><span class="text-xs" style="color: #555;"><i class="fas fa-shopping-cart mr-1" style="font-size:10px;"></i>${item.sold} sold</span>` : ''}
+            </td>
+            <td><code style="color: var(--gold); font-size: 12px;">${item.sku}</code></td>
+            <td><span class="text-xs px-2 py-1 rounded-md" style="background: #1a1a1a; color: #888;">${item.category}</span></td>
+            <td style="text-align:center;">
+              <span class="font-bold text-lg ${status === 'outofstock' ? 'style="color:var(--red);"' : status === 'lowstock' ? 'style="color:var(--orange);"' : ''}" style="${status === 'outofstock' ? 'color:var(--red);' : status === 'lowstock' ? 'color:var(--orange);' : 'color:var(--text-light);'}">${item.stock}</span>
+            </td>
+            <td style="color: var(--gold);">R${item.price.toFixed(2)}</td>
+            <td style="color: #666;">${item.reorderLevel}</td>
+            <td>${getStatusLabel(status)}</td>
+            <td style="text-align:right;">
+              <div class="flex gap-1 justify-end flex-wrap">
+                <button onclick="stockIn(${item.id})" class="btn-sm btn-stock-in" title="Stock In +1"><i class="fas fa-plus"></i></button>
+                <button onclick="stockOut(${item.id})" class="btn-sm btn-stock-out" title="Stock Out -1"><i class="fas fa-minus"></i></button>
+                <button onclick="editItem(${item.id})" class="btn-sm btn-edit" title="Edit"><i class="fas fa-pen"></i></button>
+                <button onclick="openDeleteModal(${item.id})" class="btn-sm btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ============ STOCK ACTIONS ============
+    function stockIn(id) {
+      const items = getItems();
+      const idx = items.findIndex(i => i.id === id);
+      if (idx === -1) return;
+      items[idx].stock++;
+      saveItems(items);
+      renderAll();
+      showToast(`+1 added to ${items[idx].name}`, 'success');
+    }
+
+    function stockOut(id) {
+      const items = getItems();
+      const idx = items.findIndex(i => i.id === id);
+      if (idx === -1) return;
+      if (items[idx].stock <= 0) {
+        showToast(`${items[idx].name} is already out of stock!`, 'error');
+        return;
+      }
+      items[idx].stock--;
+      items[idx].sold = (items[idx].sold || 0) + 1;
+      saveItems(items);
+      renderAll();
+      if (items[idx].stock <= items[idx].reorderLevel && items[idx].stock > 0) {
+        showToast(`Low stock alert: ${items[idx].name} (${items[idx].stock} left)`, 'warning');
+      } else if (items[idx].stock === 0) {
+        showToast(`Out of stock: ${items[idx].name}`, 'error');
+      } else {
+        showToast(`-1 removed from ${items[idx].name}`, 'success');
+      }
+    }
+
+    // ============ MODALS ============
+    function openAddModal() {
+      document.getElementById('modal-title').textContent = 'Add New Item';
+      document.getElementById('modal-save-btn').innerHTML = '<i class="fas fa-save mr-1"></i> Save Item';
+      document.getElementById('edit-id').value = '';
+      document.getElementById('item-name').value = '';
+      document.getElementById('item-sku').value = '';
+      document.getElementById('item-category').value = '';
+      document.getElementById('item-stock').value = '';
+      document.getElementById('item-price').value = '';
+      document.getElementById('item-reorder').value = '5';
+      document.getElementById('item-sold').value = '0';
+      document.getElementById('item-sku').placeholder = 'Auto-generated';
+      document.getElementById('item-modal').classList.add('active');
+    }
+
+    function editItem(id) {
+      const items = getItems();
+      const item = items.find(i => i.id === id);
+      if (!item) return;
+      document.getElementById('modal-title').textContent = 'Edit Item';
+      document.getElementById('modal-save-btn').innerHTML = '<i class="fas fa-save mr-1"></i> Update Item';
+      document.getElementById('edit-id').value = item.id;
+      document.getElementById('item-name').value = item.name;
+      document.getElementById('item-sku').value = item.sku;
+      document.getElementById('item-category').value = item.category;
+      document.getElementById('item-stock').value = item.stock;
+      document.getElementById('item-price').value = item.price;
+      document.getElementById('item-reorder').value = item.reorderLevel;
+      document.getElementById('item-sold').value = item.sold || 0;
+      document.getElementById('item-sku').placeholder = '';
+      document.getElementById('item-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('item-modal').classList.remove('active');
+    }
+
+    function saveItem(e) {
+      e.preventDefault();
+      const editId = document.getElementById('edit-id').value;
+      const name = document.getElementById('item-name').value.trim();
+      const sku = document.getElementById('item-sku').value.trim();
+      const category = document.getElementById('item-category').value;
+      const stock = parseInt(document.getElementById('item-stock').value) || 0;
+      const price = parseFloat(document.getElementById('item-price').value) || 0;
+      const reorderLevel = parseInt(document.getElementById('item-reorder').value) || 5;
+      const sold = parseInt(document.getElementById('item-sold').value) || 0;
+
+      if (!name || !category) {
+        showToast('Please fill in all required fields', 'error');
+        return false;
+      }
+
+      const items = getItems();
+
+      if (editId) {
+        const idx = items.findIndex(i => i.id === parseInt(editId));
+        if (idx !== -1) {
+          items[idx].name = name;
+          items[idx].sku = sku || items[idx].sku;
+          items[idx].category = category;
+          items[idx].stock = stock;
+          items[idx].price = price;
+          items[idx].reorderLevel = reorderLevel;
+          items[idx].sold = sold;
+        }
+        showToast(`${name} updated successfully`, 'success');
+      } else {
+        const newItem = {
+          id: getNextId(),
+          name,
+          sku: sku || generateSKU(category),
+          category,
+          stock,
+          price,
+          reorderLevel,
+          sold
+        };
+        items.push(newItem);
+        showToast(`${name} added to inventory`, 'success');
+      }
+
+      saveItems(items);
+      closeModal();
+      renderAll();
+      return false;
+    }
+
+    function openDeleteModal(id) {
+      const items = getItems();
+      const item = items.find(i => i.id === id);
+      if (!item) return;
+      deleteTargetId = id;
+      document.getElementById('delete-item-name').textContent = `Delete "${item.name}" from inventory?`;
+      document.getElementById('delete-modal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('delete-modal').classList.remove('active');
+      deleteTargetId = null;
+    }
+
+    function confirmDelete() {
+      if (deleteTargetId === null) return;
+      let items = getItems();
+      const item = items.find(i => i.id === deleteTargetId);
+      items = items.filter(i => i.id !== deleteTargetId);
+      saveItems(items);
+      closeDeleteModal();
+      renderAll();
+      showToast(`${item ? item.name : 'Item'} deleted`, 'success');
+    }
+
+    // ============ EXPORT / IMPORT ============
+    function exportData() {
+      const items = getItems();
+      const dataStr = JSON.stringify(items, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `fiestas-inventory-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast(`Exported ${items.length} items`, 'success');
+    }
+
+    function importData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          const imported = JSON.parse(ev.target.result);
+          if (!Array.isArray(imported)) throw new Error('Invalid format');
+          const valid = imported.filter(i => i.name && typeof i.stock === 'number');
+          if (valid.length === 0) throw new Error('No valid items found');
+          saveItems(valid);
+          renderAll();
+          showToast(`Imported ${valid.length} items successfully`, 'success');
+        } catch (err) {
+          showToast('Invalid file format. Please use a valid JSON backup.', 'error');
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    }
+
+    // ============ TOAST ============
+    function showToast(msg, type) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast toast-${type} show`;
+      clearTimeout(t._timeout);
+      t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ============ INIT ============
+    function renderAll() {
+      renderStats();
+      renderCategories();
+      renderTable();
+    }
+
+    function init() {
+      getItems();
+      renderAll();
+    }
+
+    // Check auth on load
+    if (sessionStorage.getItem(AUTH_KEY) === '1') {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').classList.add('active');
+      init();
+    }
+  </script>
+</body>
+</html>
